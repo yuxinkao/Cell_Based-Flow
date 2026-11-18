@@ -12,7 +12,9 @@
 
 講義中將以一個**包含 One Scan Chain 的 DFT 加法器電路**作為範例，完整走過數位 IC 設計從前端到後端的標準 **RTL-to-GDSII** 實作流程。
 
-透過這個邏輯精簡但架構完整的電路案例，同學能將注意力集中在各階段的檔案輸出格式、EDA 工具操作指令、時序與可測性約束（Constraints）設定，以及 Signoff 的檢核邏輯。
+透過這個邏輯精簡但架構完整的電路案例，同學能將注意力集中在各階段的檔案輸出格式、EDA 工具操作指令、Constraints 設定，以及 Signoff 的檢核邏輯。
+
+> **上機實作提醒：** 本網站主要提供設計流程觀念、指令說明；**考量製程與 EDA 工具保密協議，各階段實際可執行的完整 Tcl 與實驗室環境設定，請修課同學直接參考課堂發放的 PDF 講義執行**。
 
 ---
 
@@ -32,7 +34,7 @@
   * **07. Layout**：Floorplan、Placement、CTS、Routing。
   * **08. STA**：靜態時序分析與 Setup / Hold Timing check。
   * **09. Postsim**：繞線後萃取寄生參數（SPEF / SDF）之晶片後模擬。
-  * **10. Physical Verification**：實體設計規則檢查（DRC）與電路佈局一致性比對（LVS）。
+  * **10. Physical Verification**：DRC 與 LVS。
 
 ---
 
