@@ -1,14 +1,14 @@
 <style>
-  /* 1. 右側閱讀區：純白底搭配「深炭褐灰」文字，比純黑溫潤且閱讀清晰 */
+  /* 1. 右側閱讀區：純白底搭配深炭褐灰文字 */
   body, .main-content-wrap, .main-header {
     background-color: #ffffff !important;
     color: #2c2a29 !important;
   }
 
-  /* 2. 左側導覽列：沉穩內斂的「深普魯士藍（帶一點灰調，不刺眼、不廉價）」 */
+  /* 2. 左側導覽列：深普魯士藍到午夜墨藍的細膩垂直漸層 ＋ 暖棕分隔線 */
   .side-bar {
-    background-color: #162436 !important;
-    border-right: 3px solid #a1623b !important; /* 中間加入一條細緻的暖棕分隔線 */
+    background: linear-gradient(180deg, #1d324d 0%, #142236 55%, #0d1724 100%) !important;
+    border-right: 3px solid #a1623b !important;
   }
 
   /* 3. 左上角網站標題：溫潤象牙白，搭配底部暖棕細線 */
@@ -16,28 +16,30 @@
     color: #faf8f5 !important;
     font-weight: 700 !important;
     letter-spacing: 0.5px;
-    border-bottom: 1px solid rgba(194, 133, 94, 0.35);
+    border-bottom: 1px solid rgba(212, 163, 129, 0.3);
   }
 
-  /* 4. 左側選單文字：關掉主題自帶的白色漸層背景（解決字體看不清的問題） */
+  /* 4. 左側選單未選中狀態：柔和淺灰藍，在漸層深藍上清楚易讀 */
   .nav-list .nav-list-item .nav-list-link {
     background-image: none !important;
     background-color: transparent !important;
-    color: #cbd5e1 !important;
+    color: #dbe4ee !important;
     font-weight: 500 !important;
     border-radius: 6px;
     margin: 4px 10px;
     padding-left: 12px !important;
+    transition: all 0.15s ease;
   }
 
-  /* 滑鼠移過與當前所在頁面：改用「暖焦糖棕」底色配純白粗體字，對比極度清晰有質感 */
+  /* 滑鼠移過或當前所在頁面：暖象牙沙色底 ＋ 高對比深咖啡棕粗體字 ＋ 左側焦糖棕邊條 */
   .nav-list .nav-list-item .nav-list-link:hover,
   .nav-list .nav-list-item .nav-list-link.active {
     background-image: none !important;
-    background-color: #9a5b36 !important;
-    color: #ffffff !important;
-    font-weight: 600 !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    background-color: #f6ede4 !important;
+    color: #4a2511 !important;
+    font-weight: 700 !important;
+    border-left: 4px solid #b86b3d !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   }
 
   /* 左側底部版權文字微調 */
@@ -48,7 +50,7 @@
     color: #e2b49a !important;
   }
 
-  /* 5. 右側大標題與次標題：深普魯士藍主字體 ＋ 暖琥珀棕底線呼應 */
+  /* 5. 右側大標題與次標題：深普魯士藍主字體 ＋ 暖琥珀棕底線 */
   h1 {
     color: #162436 !important;
     font-weight: 700 !important;
@@ -62,7 +64,7 @@
     padding-bottom: 4px;
   }
   h3, h4 {
-    color: #8c4f2b !important; /* 小標題用沉穩紅棕色，層次分明 */
+    color: #8c4f2b !important;
   }
 
   /* 6. 超連結與行內程式碼標籤：暖沙棕底色配深棕文字 */
