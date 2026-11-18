@@ -194,4 +194,19 @@
   th:nth-child(4), td:nth-child(4) {
     width: auto !important;
   }
+
+  /* 修正側邊欄跑掉：強制最外層容器佔滿 100% 螢幕寬度，讓深藍色側邊欄緊貼螢幕最左緣 */
+  .page-wrap, .main {
+    max-width: 100% !important;
+    margin-left: 0 !important;
+  }
+  .side-bar {
+    left: 0 !important;
+    width: 300px !important;
+  }
+  @media (min-width: 66.5rem) {
+    .main {
+      margin-left: 300px !important;
+    }
+  }
 </style>
