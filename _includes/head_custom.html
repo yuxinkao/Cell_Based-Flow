@@ -172,4 +172,11 @@
   tr:nth-child(even) td {
     background-color: #ebe3d5 !important; /* 偶數列維持同色調暖沙色，形成低調層次 */
   }
+
+  /* 13. 表格前三欄（章節名稱與時間）強制單行不折行，保留彈性寬度給右側實作重點 */
+  th:nth-child(1), td:nth-child(1),
+  th:nth-child(2), td:nth-child(2),
+  th:nth-child(3), td:nth-child(3) {
+    white-space: nowrap !important;
+  }
 </style>
