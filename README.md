@@ -1,4 +1,4 @@
-# Cell-Based IC 設計流程入門 (RTL to GDSII)
+# Cell-Based IC Flow
 
 > **編輯者：** Erica Kao  
 > **最後更新：** 2026 年 11 月  
