@@ -3,7 +3,7 @@ title: Cell-Based Flow Manual
 description: RTL-to-GDSII Implementation, STA & Physical Verification Guide
 
 # 切換為清爽高質感的亮白閱讀區 + 淺灰側邊欄（不再是純黑底）
-color_scheme: light
+color_scheme: nil
 
 # 開啟站內搜尋與程式碼區塊一鍵複製按鈕
 search_enabled: true
