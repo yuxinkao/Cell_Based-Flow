@@ -29,10 +29,10 @@
 | **04. DFT** | 15 分鐘 | 15 分鐘 | 透過 DFTC 進行 One Scan Chain 的測試架構建置 |
 | **05. Presim** | 5 分鐘 | 10 分鐘 | 使用 VCS 進行含 DFT 結構之 Gate-Level 模擬 |
 | **06. ATPG** | 0 分鐘 | 10 分鐘 | 透過 TetraMAX 自動產生測試向量並進行 Fault Coverage 評估 |
-| **07. Layout** | 10 分鐘 | 0 分鐘 *(觀念)* | 使用 ICC 進行 Floorplan、Placement、CTS 與 Routing 實體繞線 |
-| **08. STA** | 0 分鐘 | 10 分鐘 *(觀念)* | 使用 PrimeTime 進行靜態時序分析 |
-| **09. Postsim** | 5 分鐘 | 0 分鐘 *(觀念)* | 使用 VCS 進行含寄生參數（SPEF / SDF）之模擬 |
-| **10. Physical Verification** | 5 分鐘 | 0 分鐘 *(觀念)* | 使用 Calibre 進行實體設計規則檢查（DRC）與電路佈局一致性比對（LVS） |
+| **07. Layout** | 10 分鐘 | 0 分鐘 | 使用 ICC 進行 Floorplan、Placement、CTS 與 Routing 實體繞線 |
+| **08. STA** | 10 分鐘 | 10 分鐘 | 使用 PrimeTime 進行靜態時序分析 |
+| **09. Postsim** | 5 分鐘 | 0 分鐘 | 使用 VCS 進行含寄生參數（SPEF / SDF）之模擬 |
+| **10. Physical Verification** | 5 分鐘 | 0 分鐘 | 使用 Calibre 進行實體設計規則檢查（DRC）與電路佈局一致性比對（LVS） |
 | **Q&A 與自由實作除錯** | — | 30 分鐘 | 課堂問題解答、環境除錯與進階操作討論 |
 
 ---
