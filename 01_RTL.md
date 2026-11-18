@@ -175,6 +175,10 @@ menu                  # 呼叫環境選單，依畫面提示選擇，source VCS
 ```bash
 source runvcs
 ```
+* **`runvcs` 腳本執行內容說明：**
+  * **讀取檔案清單 (`-f filelist.f`)：** 透過 `filelist.f` 統一管理待編譯的 RTL 設計檔（`../RTL/adder.v`）與測試檔（`../RTL/tb_adder.v`），避免當專案模組增加時指令過長。
+  * **編譯與除錯設定 (`-full64 -sverilog +v2k +define+FSDB -debug_access+all`)：** 以 64 位元模式編譯程式碼，並開啟波形傾印（FSDB Dump）除錯權限。
+  * **自動執行模擬 (`-R`)：** 編譯無誤後直接啟動執行檔（`simv`），自動進行功能驗證並輸出波形檔。
 
 ### 步驟三：確認產生 FSDB 波形檔
 模擬執行結束後，於終端機確認 `~/202612VLSI/VCS/` 資料夾內已成功產生 `adder.fsdb` 波形檔：
