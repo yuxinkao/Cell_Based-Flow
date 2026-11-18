@@ -88,36 +88,39 @@
     border: none !important;
   }
 
-  /* 8. 程式碼區塊（Code Block）：消除外層白框，統一為深普魯士藍圓角卡片並調高語法對比度 */
-  div.highlighter-rouge, figure.highlight {
+ /* 8. 徹底消除外層白框，讓深藍程式碼卡片獨立呈現，並將所有語法元素調為高對比亮色 */
+  div[class*="language-"], div.highlighter-rouge, figure.highlight, .highlight {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
+    padding: 0 !important;
     margin: 18px 0 26px 0 !important;
   }
   pre.highlight, pre {
     background-color: #162436 !important;
-    color: #f1f5f9 !important; /* 調亮預設文字與標點符號（分號、括號）為高對比亮白灰 */
+    color: #f8fafc !important;
     border-left: 4px solid #a1623b !important;
     border-radius: 8px !important;
-    padding: 16px 20px !important;
-    font-size: 0.92rem !important;
-    line-height: 1.65 !important;
+    padding: 18px 22px !important;
+    font-size: 0.95rem !important;
+    line-height: 1.7 !important;
     overflow-x: auto !important;
     box-shadow: 0 3px 10px rgba(22, 36, 54, 0.12) !important;
   }
   pre code {
     background-color: transparent !important;
-    color: #f1f5f9 !important;
+    color: #f8fafc !important;
     border: none !important;
     padding: 0 !important;
   }
-  /* 調亮深色背景上的 Verilog / Bash 語法高亮顏色 */
-  .highlight .c, .highlight .c1, .highlight .cm { color: #94a3b8 !important; font-style: italic !important; } /* 註解改為清晰銀灰藍 */
-  .highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt { color: #f6ad55 !important; font-weight: 600 !important; } /* 關鍵字改為暖琥珀金 */
-  .highlight .m, .highlight .mi, .highlight .mh, .highlight .mb { color: #68d391 !important; } /* 數字與 bit 寬度改為薄荷綠 */
-  .highlight .s, .highlight .s1, .highlight .s2 { color: #fbd38d !important; } /* 字串改為柔沙黃 */
-  .highlight .o, .highlight .p { color: #e2e8f0 !important; } /* 運算子與括號分號改為亮灰白 */
+  /* 強制將原本暗紫色的變數與函式名稱（.n, .nv, .nf 等）全部調亮為清晰亮白與天藍 */
+  .highlight .n, .highlight .nv, .highlight .nb, .highlight .bp { color: #f8fafc !important; } /* 變數名稱改為純白，不再暗紫糊在一起 */
+  .highlight .nf, .highlight .nc, .highlight .nn { color: #7dd3fc !important; font-weight: 600 !important; } /* 模組與函式名稱改為亮天藍 */
+  .highlight .c, .highlight .c1, .highlight .cm { color: #94a3b8 !important; font-style: italic !important; } /* 註解改為清晰銀灰 */
+  .highlight .k, .highlight .kd, .highlight .kn, .highlight .kp, .highlight .kr, .highlight .kt { color: #fbbf24 !important; font-weight: 600 !important; } /* 關鍵字改為明亮琥珀黃 */
+  .highlight .m, .highlight .mi, .highlight .mh, .highlight .mb { color: #4ade80 !important; } /* 數字改為亮翠綠 */
+  .highlight .s, .highlight .s1, .highlight .s2 { color: #fde68a !important; } /* 字串改為柔亮黃 */
+  .highlight .o, .highlight .p { color: #cbd5e1 !important; } /* 符號與分號改為亮銀白 */
 
   /* 9. 正文容器置中對齊並適度加寬（1040px），解決右半邊空蕩問題 */
   .main-content-wrap {
