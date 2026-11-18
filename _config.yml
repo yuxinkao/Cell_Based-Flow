@@ -1,3 +1,4 @@
-theme: jekyll-theme-slate
-title: Cell-Based IC Design Flow
-description: RTL-to-GDSII Implementation, STA & Physical Verification Guide
+remote_theme: just-the-docs/just-the-docs
+title: Cell-Based Flow Manual
+color_scheme: dark
+search_enabled: true
