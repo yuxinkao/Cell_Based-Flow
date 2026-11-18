@@ -1,25 +1,39 @@
 <style>
-  /* 1. 右側閱讀區：純白底搭配「深炭褐灰」文字，比純黑溫潤且閱讀清晰 */
-  body, .main-content-wrap, .main-header {
-    background-color: #ffffff !important;
+  /* 1. 右側閱讀區：換成溫潤「柔霧暖象牙白（#faf8f5）」，告別刺眼死白 */
+  body, .main-content-wrap, .main {
+    background-color: #faf8f5 !important;
     color: #2c2a29 !important;
   }
 
-  /* 2. 左側導覽列：沉穩內斂的「深普魯士藍（帶一點灰調，不刺眼、不廉價）」 */
-  .side-bar {
-    background-color: #162436 !important;
-    border-right: 3px solid #a1623b !important; /* 中間加入一條細緻的暖棕分隔線 */
+  /* 頂部搜尋列：略深的暖沙灰（#f3efe9），與閱讀區拉出柔和層次 */
+  .main-header {
+    background-color: #f3efe9 !important;
+    border-bottom: 1px solid #e4ddd3 !important;
+  }
+  .search-input {
+    background-color: #faf8f5 !important;
+    color: #2c2a29 !important;
   }
 
-  /* 3. 左上角網站標題：溫潤象牙白，搭配底部暖棕細線 */
+  /* 2. 左側導覽列：沉穩內斂的「深普魯士藍」＋ 暖棕分隔線 */
+  .side-bar {
+    background-color: #162436 !important;
+    border-right: 3px solid #a1623b !important;
+  }
+
+  /* 3. 左上角網站標題：強制單行完全展開不折行 */
   .site-title {
     color: #faf8f5 !important;
     font-weight: 700 !important;
-    letter-spacing: 0.5px;
+    font-size: 1.35rem !important;
+    white-space: nowrap !important;
+    letter-spacing: 0.4px;
     border-bottom: 1px solid rgba(194, 133, 94, 0.35);
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 
-  /* 4. 左側選單文字：關掉主題自帶的白色漸層背景（解決字體看不清的問題） */
+  /* 4. 左側選單文字：關掉主題自帶的白色漸層背景 */
   .nav-list .nav-list-item .nav-list-link {
     background-image: none !important;
     background-color: transparent !important;
@@ -30,7 +44,7 @@
     padding-left: 12px !important;
   }
 
-  /* 滑鼠移過與當前所在頁面：改用「暖焦糖棕」底色配純白粗體字，對比極度清晰有質感 */
+  /* 滑鼠移過與當前所在頁面：暖焦糖棕底色配純白粗體字 */
   .nav-list .nav-list-item .nav-list-link:hover,
   .nav-list .nav-list-item .nav-list-link.active {
     background-image: none !important;
@@ -48,7 +62,7 @@
     color: #e2b49a !important;
   }
 
-  /* 5. 右側大標題與次標題：深普魯士藍主字體 ＋ 暖琥珀棕底線呼應 */
+  /* 5. 右側大標題與次標題：深普魯士藍主字體 ＋ 暖琥珀棕底線 */
   h1 {
     color: #162436 !important;
     font-weight: 700 !important;
@@ -58,21 +72,21 @@
   h2 {
     color: #1e3552 !important;
     font-weight: 600 !important;
-    border-bottom: 1px solid #e7e2dd !important;
+    border-bottom: 1px solid #e2dad0 !important;
     padding-bottom: 4px;
   }
   h3, h4 {
-    color: #8c4f2b !important; /* 小標題用沉穩紅棕色，層次分明 */
+    color: #8c4f2b !important;
   }
 
-  /* 6. 超連結與行內程式碼標籤：暖沙棕底色配深棕文字 */
+  /* 6. 超連結與行內程式碼標籤：搭配暖紙張底色的深沙棕標籤 */
   a {
     color: #9a5b36 !important;
   }
   code {
-    background-color: #fbf7f4 !important;
+    background-color: #f0e8df !important;
     color: #8c4f2b !important;
-    border: 1px solid #e6d5c8 !important;
+    border: 1px solid #dfd3c5 !important;
     border-radius: 4px;
     padding: 2px 6px;
   }
@@ -89,17 +103,18 @@
     color: #e2e8f0 !important;
     border: none !important;
   }
-  /* 8. 讓整個版面貼齊螢幕最左側（取消寬螢幕自動置中留白） */
+
+  /* 8. 讓整個版面貼齊螢幕最左側，並將左側區塊加寬至 300px */
   @media (min-width: 66.5rem) {
     .side-bar {
-      width: 320px !important;
-      max-width: 260px !important;
+      width: 300px !important;
+      max-width: 300px !important;
       padding-left: 16px !important;
       padding-right: 16px !important;
     }
     .main {
       margin-left: 320px !important;
-      max-width: calc(100% - 260px) !important;
+      max-width: calc(100% - 300px) !important;
     }
     .site-header, .site-nav, .site-footer {
       width: 100% !important;
@@ -109,4 +124,3 @@
     }
   }
 </style>
-
