@@ -12,53 +12,46 @@ nav_order: 2
 
 本課程的加法器實作範例（Adder 採用**內部自動累加架構**，每個時脈週期計算 y = a + b，並同步更新內部運算元 b = b + 1。
 
-透過將運算結果 y 與內部計數器 b 皆設計為時脈同步暫存器（Flip-Flops），電路內部不僅具備完整的 **Register-to-Register** 時序路徑供後續 **03. Synthesis** 與 **08. STA** 分析關鍵路徑延遲，也能在 **04. DFT** 階段將所有正反器串接成一條 **One Scan Chain**。
-
-### I/O 腳位定義（以 4-bit 運算為例）
+### I/O 腳位定義
 
 | 腳位名稱 | 方向 | 位元寬度 | 功能說明 |
 | :--- | :--- | :--- | :--- |
 | **clk** | Input | 1-bit | 系統時脈訊號（正緣觸發） |
-| **rst_n** | Input | 1-bit | 非同步低準位重置訊號（Active-Low Reset） |
+| **arst_n** | Input | 1-bit | 非同步低準位重置訊號（Active-Low Reset） |
 | **a** | Input | 4-bit | 無號數輸入運算元（0 ~ 15） |
 | **y** | Output | 5-bit | 加法運算結果輸出（y = a + b，保留進位不溢位） |
 
 ---
 
 ## 2. RTL 設計範例 (adder.v)
-
-採用標準的**組合邏輯與循序邏輯分離寫法**，清楚區分組合運算（next_b、next_y）與正反器狀態更新（b、y），避免產生非預期的 Latch 或位元寬度不匹配警告：
+本章節著重於 RTL 驗證流程與工具操作，**不針對 Verilog 語法細節進行教學**；若同學希望深入了解可合成 RTL 撰寫規範，建議選修相關課程。
 
 ```verilog
 module adder (
     input  wire       clk,
-    input  wire       rst_n,
+    input  wire       arst_n,
     input  wire [3:0] a,
     output reg  [4:0] y
 );
     reg  [3:0] b;
     wire [3:0] next_b;
-    wire [4:0] next_y;
 
-    // 組合邏輯 (Combinational Logic)
     assign next_b = b + 4'd1;
-    assign next_y = a + b;
 
-    // 循序邏輯 (Sequential Logic)
-    always @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
+    always @(posedge clk or negedge arst_n) begin
+        if (!arst_n) begin
             b <= 4'd0;
             y <= 5'd0;
         end else begin
             b <= next_b;
-            y <= next_y;
+            y <= a + b;
         end
     end
 endmodule
 ```
 
 ## 3. Testbench 撰寫 (tb_adder.v)
-Testbench 負責產生時脈、重置訊號與輸入測試向量 a，並呼叫系統任務輸出 .fsdb 波形檔，方便於 Verdi 中觀察內部暫存器 b 逐拍遞增與輸出 y 的變化規律。
+內建自動比對機制（Self-Checking），模擬結束時將於終端機直接輸出 PASS 或 FAIL 判定結果，並產生 .fsdb 波形檔供除錯檢視。
 
 ```verilog
 `timescale 1ns/1ps
@@ -66,41 +59,71 @@ Testbench 負責產生時脈、重置訊號與輸入測試向量 a，並呼叫�
 module tb_adder;
 
     reg        clk;
-    reg        rst_n;
+    reg        arst_n;
     reg  [3:0] a;
     wire [4:0] y;
 
-    // 實例化待測電路 (DUT)
+    reg  [3:0] golden_b;
+    reg  [4:0] golden_y;
+    integer    err_cnt;
+
     adder u_adder (
-        .clk   (clk),
-        .rst_n (rst_n),
-        .a     (a),
-        .y     (y)
+        .clk    (clk),
+        .arst_n (arst_n),
+        .a      (a),
+        .y      (y)
     );
 
-    // 產生 10ns 週期 (100MHz) 之系統時脈
     always #5 clk = ~clk;
 
-    // 測試向量與模擬流程控制
+    always @(posedge clk or negedge arst_n) begin
+        if (!arst_n) begin
+            golden_b <= 4'd0;
+            golden_y <= 5'd0;
+        end else begin
+            golden_b <= golden_b + 4'd1;
+            golden_y <= a + golden_b;
+        end
+    end
+
+    always @(negedge clk) begin
+        if (arst_n) begin
+            if (y !== golden_y) begin
+                $display("[FAIL] Time=%0t | a=%0d, golden_b=%0d | Expected y=%0d, Got y=%0d",
+                         $time, a, golden_b, golden_y, y);
+                err_cnt = err_cnt + 1;
+            end
+        end
+    end
+
     initial begin
-        clk   = 1'b0;
-        rst_n = 1'b0;
-        a     = 4'd0;
+        clk     = 1'b0;
+        arst_n  = 1'b0;
+        a       = 4'd0;
+        err_cnt = 0;
 
-        #12 rst_n = 1'b1; // 釋放重置，此時內部 b = 0
+        #12 arst_n = 1'b1; // 釋放非同步重置，此時內部 b = 0
 
-        // 設定 a = 5，觀察 b 從 0, 1, 2, 3... 遞增時 y 的輸出變化
         @(negedge clk) a = 4'd5;
         repeat (5) @(negedge clk);
 
-        // 切換 a = 10，繼續觀察累加結果
         a = 4'd10;
-        repeat (5) @(negedge clk);
+        repeat (12) @(negedge clk);
 
-        #20 $finish;
+        #10;
+        if (err_cnt == 0) begin
+            $display("========================================");
+            $display("   SIMULATION RESULT : PASS (0 Errors)  ");
+            $display("========================================");
+        end else begin
+            $display("========================================");
+            $display("   SIMULATION RESULT : FAIL (%0d Errors) ", err_cnt);
+            $display("========================================");
+        end
+
+        $finish;
     end
 
-    // 輸出 FSDB 波形檔供 Verdi 檢視
     initial begin
         $fsdbDumpfile("adder.fsdb");
         $fsdbDumpvars(0, tb_adder);
