@@ -1,4 +1,4 @@
 ---
-title: 02. Spyglass
+title: 02. Lint
 nav_order: 3
 ---
