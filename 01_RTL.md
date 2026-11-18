@@ -159,7 +159,7 @@ endmodule
 
 <div class="ws-path">
   <strong>模擬執行目錄：</strong><code>~/202612VLSI/VCS/</code><br>
-  <strong>說明：</strong>請於 <code>VCS</code> 資料夾內開啟終端機，並於成功 <code>Source</code> <code>VCS</code> 再度 <code>source script/runvcs</code> 執行模擬。
+  <strong>說明：</strong>請於 <code>VCS</code> 資料夾內開啟終端機，並於成功載入 <code>VCS</code> 環境後，再度 <code>source script/runvcs</code> 執行模擬。
 </div>
 
 ### 步驟一：於 VCS 資料夾開啟終端機並載入 EDA 環境
