@@ -31,7 +31,7 @@
 | **07. Layout** | 使用 ICC 進行 Floorplan、Placement、CTS 與 Routing 實體繞線 |
 | **08. STA** | 使用 PrimeTime 進行靜態時序分析 |
 | **09. Postsim** | 使用 VCS 進行含寄生參數（SPEF / SDF）之模擬 |
-| **10. Physical Verification** | DRC 與 LVS |
+| **10. Physical Verification** | 使用 Calibre 進行實體設計規則檢查（DRC）與電路佈局一致性比對（LVS） |
 
 ---
 
