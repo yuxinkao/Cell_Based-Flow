@@ -45,7 +45,7 @@
 **聯絡方式：** 若有學術交流、內容指正或授權洽詢需求，請透過電子郵件與作者聯繫：m1453003@gm.ncue.edu.tw
 
 <div class="page-end-nav">
-  <span class="page-end-text">本章節已閱讀完畢。</span>
+  <span class="page-end-text">本章節已閱讀完畢，課程即將開始。</span>
   <a href="{{ '/01_RTL.html' | relative_url }}" class="next-chapter-btn">
     前往下一章：01. Circuit Design & Verification ➔
   </a>
