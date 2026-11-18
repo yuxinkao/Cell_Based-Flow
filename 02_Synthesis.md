@@ -1,5 +1,5 @@
 ---
-title: 02. Synthesis
-nav_order: 3
+title: 03. Synthesis
+nav_order: 4
 ---
 
