@@ -1,4 +1,16 @@
 remote_theme: just-the-docs/just-the-docs
 title: Cell-Based Flow Manual
-color_scheme: dark
+description: RTL-to-GDSII Implementation, STA & Physical Verification Guide
+
+# 切換為清爽高質感的亮白閱讀區 + 淺灰側邊欄（不再是純黑底）
+color_scheme: light
+
+# 開啟站內搜尋與程式碼區塊一鍵複製按鈕
 search_enabled: true
+enable_copy_code_button: true
+
+# 右上角加入 GitHub 專案連結圖示，增加作品集完整度
+aux_links:
+  "GitHub Repository":
+    - "https://github.com/yuxinkao/Cell_Based-Flow"
+aux_links_new_tab: true
