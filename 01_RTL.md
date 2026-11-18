@@ -141,6 +141,18 @@ module tb_adder;
 
 endmodule
 ```
+### Code Coverage
+
+在 RTL 驗證中，終端機印出 `PASS` 僅代表**「已執行的 Function Code 符合預期」**，並不能保證所有分支或訊號狀態皆已測試完畢。實際 Tapeout 時會透過 **Code Coverage** 量化測試平台的驗證充分度，常見指標包含：
+
+| 覆蓋率指標 | 英文名稱 | 檢核重點說明 |
+| :--- | :--- | :--- |
+| **行覆蓋率** | Line Coverage | 確認 RTL 程式碼中的每一行敘述是否皆有被執行到。 |
+| **條件 / 分支覆蓋率** | Branch / Condition Coverage | 確認 `if-else`、`case` 等所有條件判斷的 `True` 與 `False` 分支是否皆已觸發。 |
+| **翻轉覆蓋率** | Toggle Coverage | 確認每一個訊號與暫存器的每個位元（Bit）是否皆經歷過 `0 -> 1` 與 `1 -> 0` 的狀態切換。 |
+| **狀態機覆蓋率** | FSM Coverage | 確認有限狀態機的所有狀態（State）與狀態轉移路徑（Transition）是否皆已走遍。 |
+
+> **Code Coverage** 用於評估設計端 RTL 模擬的測試完整性（目標通常要求 95% ~ 100%）。
 
 ## 4. 功能模擬與波形檢視 (VCS & Verdi)
 上機提醒： 執行前，請先確認工作站內已存放本次課程所需的 202612VLSI 資料夾。
