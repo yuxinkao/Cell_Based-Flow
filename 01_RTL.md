@@ -157,6 +157,11 @@ endmodule
 ## 4. 功能模擬與波形檢視 (VCS & Verdi)
 > **上機提醒：** 執行前，請先確認工作站內已存放本次課程所需的 `202612VLSI` 資料夾。
 
+<div class="ws-path">
+  <strong>模擬執行目錄：</strong><code>~/202612VLSI/VCS/</code><br>
+  <strong>說明：</strong>請於 <code>VCS</code> 資料夾內開啟終端機執行模擬，並讀取位於 <code>../RTL/</code> 目錄下的 <code>adder.v</code> 與 <code>tb_adder.v</code>。
+</div>
+
 ### 步驟一：於 VCS 資料夾開啟終端機並載入 EDA 環境
 請先切換至 `~/202612VLSI/VCS` 資料夾開啟終端機（或在終端機中 `cd` 至該目錄），接著切換至 **C Shell (`csh`)** 並透過 `menu` 指令選擇載入 **VCS**：
 
