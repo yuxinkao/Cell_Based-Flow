@@ -154,12 +154,12 @@ endmodule
 
 > **Code Coverage** 用於評估設計端 RTL 模擬的測試完整性（目標通常要求 95% ~ 100%）。
 
-## 4. 功能模擬與波形檢視 (VCS & Verdi)
+## 4. 功能模擬 (VCS)
 > **上機提醒：** 執行前，請先確認工作站內已存放本次課程所需的 `202612VLSI` 資料夾。
 
 <div class="ws-path">
   <strong>模擬執行目錄：</strong><code>~/202612VLSI/VCS/</code><br>
-  <strong>說明：</strong>請於 <code>VCS</code> 資料夾內開啟終端機，並於成功 <code>Source</code> <code>VCS</code> 再度 <code>Source</code> <code>runvcs</code> 執行模擬。
+  <strong>說明：</strong>請於 <code>VCS</code> 資料夾內開啟終端機，並於成功 <code>Source</code> <code>VCS</code> 再度 <code>Source</code> <code>script/runvcs</code> 執行模擬。
 </div>
 
 ### 步驟一：於 VCS 資料夾開啟終端機並載入 EDA 環境
@@ -173,14 +173,17 @@ menu                  # 呼叫環境選單，依畫面提示選擇，source VCS
 ### 步驟二：執行模擬腳本 (runvcs)
 待終端機畫面顯示 `VCS is ready` 提示訊息，確認環境載入完成後，於同一終端機執行課程預置的模擬腳本：
 ```bash
-source runvcs
+source script/runvcs
 ```
 * **`runvcs` 腳本執行內容說明：**
   * **讀取檔案清單 (`-f filelist.f`)：** 透過 `filelist.f` 統一管理待編譯的 RTL 設計檔（`../RTL/adder.v`）與測試檔（`../RTL/tb_adder.v`），避免當專案模組增加時指令過長。
   * **編譯與除錯設定 (`-full64 -sverilog +v2k +define+FSDB -debug_access+all`)：** 以 64 位元模式編譯程式碼，並開啟波形傾印（FSDB Dump）除錯權限。
   * **自動執行模擬 (`-R`)：** 編譯無誤後直接啟動執行檔（`simv`），自動進行功能驗證並輸出波形檔。
+  * **同步波形檔至 Verdi 目錄 (`cp *.fsdb ../Verdi/`)：** 模擬結束後自動將產生的 `.fsdb` 波形檔複製到 `../Verdi/` 資料夾內，方便後續直接切換至 Verdi 目錄開啟波形檢視。
 
 ### 步驟三：確認模擬通過並產生 FSDB 波形檔
 模擬執行結束後，請先確認終端機畫面印出 **`SIMULATION RESULT : PASS (0 Errors)`** 且過程中沒有 **Error** 提示訊息。
 
 再檢查 `~/202612VLSI/VCS/` 資料夾內是否已成功產生 `adder.fsdb` 波形檔。
+
+## 4. 波形檢視 (Verdi)
