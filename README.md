@@ -2,7 +2,7 @@
 
 **編輯者：** Erica Kao  
 **最後更新：** 2026 年 11 月  
-**實作範例：** Adder with One Scan Chain
+**實作範例：** Adder with One Scan Chain  
 **使用製程：** UMC 0.18 µm (1P6M)
 
 ---
