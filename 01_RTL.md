@@ -159,7 +159,7 @@ endmodule
 
 <div class="ws-path">
   <strong>模擬執行目錄：</strong><code>~/202612VLSI/VCS/</code><br>
-  <strong>說明：</strong>請於 <code>VCS</code> 資料夾內開啟終端機執行模擬，並讀取位於 <code>../RTL/</code> 目錄下的 <code>adder.v</code> 與 <code>tb_adder.v</code>。
+  <strong>說明：</strong>請於 <code>VCS</code> 資料夾內開啟終端機，並於成功 <code>Source</code> <code>VCS</code> 再度 <code>Source</code> <code>runvcs</code> 執行模擬。
 </div>
 
 ### 步驟一：於 VCS 資料夾開啟終端機並載入 EDA 環境
