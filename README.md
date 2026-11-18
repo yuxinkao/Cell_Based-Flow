@@ -46,7 +46,7 @@
 
 <div class="page-end-nav">
   <span class="page-end-text">本章節已閱讀完畢。</span>
-  <a href="{{ '[/docs/02-lint/](https://yuxinkao.github.io/Cell_Based-Flow/01_RTL.html)' | relative_url }}" class="next-chapter-btn">
+  <a href="{{ '{% link 01_RTL.md %}' | relative_url }}" class="next-chapter-btn">
     前往下一章：01. Circuit Design & Verification ➔
   </a>
 </div>
