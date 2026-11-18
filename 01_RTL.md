@@ -21,7 +21,7 @@ nav_order: 2
 | **`clk`** | Input | 1-bit | 系統時脈訊號（正緣觸發） |
 | **`rst_n`** | Input | 1-bit | 非同步低準位重置訊號（Active-Low Reset） |
 | **`a`** | Input | 4-bit | 無號數輸入運算元（0 ~ 15） |
-| **`y`** | Output | 5-bit | 加法運算結果輸出（$y = a + b$，保留進位不溢位） |
+| **`y`** | Output | 5-bit | 加法運算結果輸出（y = a + b，保留進位不溢位） |
 
 ---
 
