@@ -180,5 +180,7 @@ source runvcs
   * **編譯與除錯設定 (`-full64 -sverilog +v2k +define+FSDB -debug_access+all`)：** 以 64 位元模式編譯程式碼，並開啟波形傾印（FSDB Dump）除錯權限。
   * **自動執行模擬 (`-R`)：** 編譯無誤後直接啟動執行檔（`simv`），自動進行功能驗證並輸出波形檔。
 
-### 步驟三：確認產生 FSDB 波形檔
-模擬執行結束後，於終端機確認 `~/202612VLSI/VCS/` 資料夾內已成功產生 `adder.fsdb` 波形檔：
+### 步驟三：確認模擬通過並產生 FSDB 波形檔
+模擬執行結束後，請先確認終端機畫面印出 **`SIMULATION RESULT : PASS (0 Errors)`** 且過程中沒有 **Error** 提示訊息。
+
+再檢查 `~/202612VLSI/VCS/` 資料夾內是否已成功產生 `adder.fsdb` 波形檔。
