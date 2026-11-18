@@ -159,7 +159,7 @@ endmodule
 
 <div class="ws-path">
   <strong>模擬執行目錄：</strong><code>~/202612VLSI/VCS/</code><br>
-  <strong>說明：</strong>請於 <code>VCS</code> 資料夾內開啟終端機，並於成功 <code>Source</code> <code>VCS</code> 再度 <code>Source</code> <code>script/runvcs</code> 執行模擬。
+  <strong>說明：</strong>請於 <code>VCS</code> 資料夾內開啟終端機，並於成功 <code>Source</code> <code>VCS</code> 再度 <code>source script/runvcs</code> 執行模擬。
 </div>
 
 ### 步驟一：於 VCS 資料夾開啟終端機並載入 EDA 環境
@@ -186,4 +186,32 @@ source script/runvcs
 
 再檢查 `~/202612VLSI/VCS/` 資料夾內是否已成功產生 `adder.fsdb` 波形檔。
 
-## 4. 波形檢視 (Verdi)
+## 5. 波形檢視 (Verdi)
+> **上機提醒：** 執行前，請先確認前一步驟模擬已完成，且 `adder.fsdb` 波形檔已順利複製至 `Verdi` 資料夾內。
+
+<div class="ws-path">
+  <strong>波形檢視目錄：</strong><code>~/202612VLSI/Verdi/</code><br>
+  <strong>說明：</strong>請於 <code>Verdi</code> 資料夾內開啟終端機，並於成功載入 <code>Verdi</code> 環境後，執行 <code>source script/runverdi</code> 開啟波形視窗。
+</div>
+
+### 步驟一：於 Verdi 資料夾開啟終端機並載入 EDA 環境
+請先切換至 `~/202612VLSI/Verdi` 資料夾開啟終端機（或在終端機中 `cd` 至該目錄），接著切換至 **C Shell (`csh`)**，並透過 `menu` 指令選擇載入 **Verdi**：
+
+```bash
+    cd ~/202612VLSI/Verdi   # 確認位於 Verdi 目錄下（若已於該資料夾開啟終端機可省略）
+    csh                     # 切換至 C Shell 環境
+    menu                    # 呼叫環境選單，依畫面提示選擇載入 Verdi
+```
+
+### 步驟二：執行波形檢視腳本 (`runverdi`)
+待終端機畫面顯示 **`Verdi is ready`** 提示訊息，確認環境變數載入完成後，於同一終端機執行課程預置的啟動腳本：
+
+    source script/runverdi
+
+* **`runverdi` 腳本執行內容說明：**
+  * **載入設計與測試平台 (`-sv -f filelist.f`)：** 讀取 `../RTL/adder.v` 與 `../RTL/tb_adder.v` 原始碼，建立電路階層架構以供訊號追蹤。
+  * **掛載波形檔案 (`-ssf adder.fsdb`)：** 自動讀取已同步至 `Verdi` 目錄下的 `adder.fsdb` 波形檔。
+  * **背景啟動圖形介面 (`&`)：** 於背景開啟 Verdi GUI 視窗，保留終端機指令輸入權限。
+
+### 步驟三：波形訊號驗證與檢核
+Verdi 視窗開啟後，請將待測電路 `u_adder` 內的訊號（`clk`、`arst_n`、`a`、`b`、`y`）加入波形視窗（nWave）進行核對。
