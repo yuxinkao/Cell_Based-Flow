@@ -43,3 +43,10 @@
 **版權聲明：** 本教材僅供本課程修課學生於課堂與實作參考使用，**嚴禁使用於任何商業用途，亦不同意任何形式之未經授權轉載、重製或散布**。  
 
 **聯絡方式：** 若有學術交流、內容指正或授權洽詢需求，請透過電子郵件與作者聯繫：m1453003@gm.ncue.edu.tw
+
+<div class="page-end-nav">
+  <span class="page-end-text">本章節已閱讀完畢。</span>
+  <a href="{{ '/docs/02-lint/' | relative_url }}" class="next-chapter-btn">
+    前往下一章：01. Circuit Design & Verification ➔
+  </a>
+</div>
