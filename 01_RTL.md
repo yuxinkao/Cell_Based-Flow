@@ -1,4 +1,4 @@
 ---
-title: 01. Logic Synthesis
-nav_order: 1
+title: 01. RTL
+nav_order: 2
 ---
