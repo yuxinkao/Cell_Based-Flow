@@ -55,6 +55,7 @@ module adder (
         end
     end
 endmodule
+```
 
 ## 3. Testbench 撰寫 (tb_adder.v)
 Testbench 負責產生時脈、重置訊號與輸入測試向量 a，並呼叫系統任務輸出 .fsdb 波形檔，方便於 Verdi 中觀察內部暫存器 b 逐拍遞增與輸出 y 的變化規律。
@@ -106,6 +107,7 @@ module tb_adder;
     end
 
 endmodule
+```
 
 ## 4. 功能模擬與波形檢視 (VCS & Verdi)
 上機提醒： 執行 EDA 工具前，請先確認已載入課堂 PDF 講義指定的環境設定檔。
