@@ -1,81 +1,88 @@
 <style>
-  /* 1. 右側閱讀區：純白底搭配「深石板藍灰」文字（取代生硬的純黑，閱讀更柔和高級） */
+  /* 1. 右側閱讀區：純白底搭配「深炭褐灰」文字，比純黑溫潤且閱讀清晰 */
   body, .main-content-wrap, .main-header {
     background-color: #ffffff !important;
-    color: #334155 !important;
+    color: #2c2a29 !important;
   }
 
-  /* 2. 左側導覽列：高飽和「沉穩深海軍藍」色塊，拉出強烈的專業層次感 */
+  /* 2. 左側導覽列：沉穩內斂的「深普魯士藍（帶一點灰調，不刺眼、不廉價）」 */
   .side-bar {
-    background-color: #1e3a8a !important;
-    border-right: none !important;
+    background-color: #162436 !important;
+    border-right: 3px solid #a1623b !important; /* 中間加入一條細緻的暖棕分隔線 */
   }
 
-  /* 3. 左上角網站標題：純白加粗，與深藍底色形成俐落對比 */
+  /* 3. 左上角網站標題：溫潤象牙白，搭配底部暖棕細線 */
   .site-title {
-    color: #ffffff !important;
+    color: #faf8f5 !important;
     font-weight: 700 !important;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(194, 133, 94, 0.35);
   }
 
-  /* 4. 左側選單文字：柔和冰藍白，滑鼠移過或選中時變成高飽和亮藍膠囊色塊 */
+  /* 4. 左側選單文字：關掉主題自帶的白色漸層背景（解決字體看不清的問題） */
   .nav-list .nav-list-item .nav-list-link {
-    color: #dbeafe !important;
+    background-image: none !important;
+    background-color: transparent !important;
+    color: #cbd5e1 !important;
     font-weight: 500 !important;
     border-radius: 6px;
-    margin: 3px 10px;
+    margin: 4px 10px;
+    padding-left: 12px !important;
   }
+
+  /* 滑鼠移過與當前所在頁面：改用「暖焦糖棕」底色配純白粗體字，對比極度清晰有質感 */
   .nav-list .nav-list-item .nav-list-link:hover,
   .nav-list .nav-list-item .nav-list-link.active {
-    background-color: #2563eb !important;
+    background-image: none !important;
+    background-color: #9a5b36 !important;
     color: #ffffff !important;
     font-weight: 600 !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
   }
 
-  /* 左側底部版權文字微調為半透明淺藍，不搶視覺重心 */
+  /* 左側底部版權文字微調 */
   .site-footer {
-    color: #93c5fd !important;
+    color: #94a3b8 !important;
   }
   .site-footer a {
-    color: #ffffff !important;
+    color: #e2b49a !important;
   }
 
-  /* 5. 右側內文大標題與次標題：改用高質感「深靛藍」取代純黑 */
+  /* 5. 右側大標題與次標題：深普魯士藍主字體 ＋ 暖琥珀棕底線呼應 */
   h1 {
-    color: #1e3a8a !important;
+    color: #162436 !important;
     font-weight: 700 !important;
-    border-bottom: 2px solid #3b82f6;
+    border-bottom: 2px solid #a1623b !important;
     padding-bottom: 8px;
   }
   h2 {
-    color: #1d4ed8 !important;
+    color: #1e3552 !important;
     font-weight: 600 !important;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e7e2dd !important;
     padding-bottom: 4px;
   }
   h3, h4 {
-    color: #2563eb !important;
+    color: #8c4f2b !important; /* 小標題用沉穩紅棕色，層次分明 */
   }
 
-  /* 6. 超連結與行內程式碼標籤 */
+  /* 6. 超連結與行內程式碼標籤：暖沙棕底色配深棕文字 */
   a {
-    color: #2563eb !important;
+    color: #9a5b36 !important;
   }
   code {
-    background-color: #eff6ff !important;
-    color: #1d4ed8 !important;
-    border: 1px solid #bfdbfe !important;
+    background-color: #fbf7f4 !important;
+    color: #8c4f2b !important;
+    border: 1px solid #e6d5c8 !important;
     border-radius: 4px;
     padding: 2px 6px;
   }
 
-  /* 7. 程式碼區塊（Tcl / Bash 腳本）：深海藍黑終端機卡片 */
+  /* 7. 程式碼區塊（Tcl / Bash 腳本）：深海藍黑底 ＋ 左側暖銅棕邊條 */
   pre.highlight, div.highlighter-rouge {
-    background-color: #0f172a !important;
+    background-color: #131d2b !important;
     color: #f8fafc !important;
     border-radius: 8px !important;
-    border-left: 4px solid #3b82f6 !important;
+    border-left: 4px solid #b87348 !important;
   }
   pre.highlight code {
     background-color: transparent !important;
