@@ -32,33 +32,18 @@
     padding-right: 12px !important;
   }
 
-  /* 4. 左側選單文字：關掉主題自帶的白色漸層背景 */
+  /* 4. 左側選單文字：調整字級與單行展開，確保較長章節（如 01 章）也不折行 */
   .nav-list .nav-list-item .nav-list-link {
     background-image: none !important;
     background-color: transparent !important;
     color: #cbd5e1 !important;
     font-weight: 500 !important;
+    font-size: 0.92rem !important;
+    white-space: nowrap !important;
     border-radius: 6px;
-    margin: 4px 10px;
-    padding-left: 12px !important;
-  }
-
-  /* 滑鼠移過與當前所在頁面：暖焦糖棕底色配純白粗體字 */
-  .nav-list .nav-list-item .nav-list-link:hover,
-  .nav-list .nav-list-item .nav-list-link.active {
-    background-image: none !important;
-    background-color: #9a5b36 !important;
-    color: #ffffff !important;
-    font-weight: 600 !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  }
-
-  /* 左側底部版權文字微調 */
-  .site-footer {
-    color: #94a3b8 !important;
-  }
-  .site-footer a {
-    color: #e2b49a !important;
+    margin: 4px 6px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
   }
 
   /* 5. 右側大標題與次標題：深普魯士藍主字體 ＋ 暖琥珀棕底線 */
