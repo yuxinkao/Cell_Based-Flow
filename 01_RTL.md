@@ -56,6 +56,11 @@ endmodule
 ```
 
 ## 3. Testbench 撰寫 (tb_adder.v)
+<div class="ws-path">
+  <strong>工作站檔案位置：</strong><code>~/202612VLSI/RTL/tb_adder.v</code><br>
+  <strong>說明：</strong>本測試檔已預先放置於工作站專案目錄下的 <code>RTL</code> 資料夾中，檔名為 <code>tb_adder.v</code>。
+</div>
+
 內建自動比對機制（Self-Checking），模擬結束時將於終端機直接輸出 PASS 或 FAIL 判定結果，並產生 .fsdb 波形檔供除錯檢視。
 
 ```verilog
