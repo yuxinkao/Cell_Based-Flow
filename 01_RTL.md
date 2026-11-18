@@ -218,7 +218,7 @@ Verdi 視窗開啟後，請將待測電路 `u_adder` 內的訊號（`clk`、`ars
 
 <div class="page-end-nav">
   <span class="page-end-text">本章節已閱讀完畢，請確認以上實作皆已完成。</span>
-  <a href="{{ '/docs/02-lint/' | relative_url }}" class="next-chapter-btn">
+  <a href="{{ '[/docs/02-lint/](https://yuxinkao.github.io/Cell_Based-Flow/02_Lint.html)' | relative_url }}" class="next-chapter-btn">
     前往下一章：02. Lint  ➔
   </a>
 </div>
