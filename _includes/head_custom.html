@@ -123,14 +123,25 @@
     }
   }
 
-  /* 9. 限制正文最大閱讀寬度並增加左右留白，營造精裝書本的呼吸感 */
-  .main-content {
-    max-width: 860px !important;
+  /* 9. 正文容器置中對齊並適度加寬（1040px），解決右半邊空蕩問題 */
+  .main-content-wrap {
+    max-width: 1040px !important;
+    margin: 0 auto !important;
     padding: 36px 48px !important;
-    line-height: 1.75 !important;
+  }
+  .main-content {
+    max-width: 100% !important;
+    padding: 0 !important;
+    line-height: 1.8 !important;
   }
 
-  /* 10. 卡片化引用區塊（作者資訊卡 ＆ 提醒框）：暖沙底色 ＋ 左側焦糖棕粗邊條 */
+  /* 10. 粗體字改為「赤陶紅棕（#9a5b36）」，在暖紙張底色上突顯重點層次 */
+  strong, b {
+    color: #9a5b36 !important;
+    font-weight: 700 !important;
+  }
+
+  /* 11. 卡片化引用區塊（作者資訊卡 ＆ 提醒框） */
   blockquote {
     background-color: #e9e1d3 !important;
     border-left: 4px solid #a1623b !important;
@@ -144,14 +155,19 @@
     margin: 4px 0 !important;
   }
 
-  /* 11. 表格質感升級：深普魯士藍表頭 ＋ 暖白交錯列 */
+  /* 12. 消除 Just the Docs 預設的 .table-wrapper 白色外框，統一表格質感 */
+  .table-wrapper {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    margin: 20px 0 28px 0 !important;
+  }
   table {
     width: 100% !important;
     border-collapse: collapse !important;
-    margin: 20px 0 28px 0 !important;
     border-radius: 8px !important;
     overflow: hidden !important;
-    box-shadow: 0 2px 8px rgba(22, 36, 54, 0.06) !important;
+    box-shadow: 0 2px 8px rgba(22, 36, 54, 0.08) !important;
   }
   th {
     background-color: #162436 !important;
@@ -163,10 +179,10 @@
   td {
     background-color: #faf8f5 !important;
     border-bottom: 1px solid #e4ddd3 !important;
-    padding: 11px 16px !important;
+    padding: 12px 16px !important;
     color: #2c2a29 !important;
   }
   tr:nth-child(even) td {
-    background-color: #f5f0e6 !important;
+    background-color: #f4eee4 !important;
   }
 </style>
