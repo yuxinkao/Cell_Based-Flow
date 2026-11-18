@@ -1,4 +1,4 @@
 ---
-title: 01. RTL
+title: 01. Circuit Design & Verification
 nav_order: 2
 ---
