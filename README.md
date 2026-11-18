@@ -23,17 +23,18 @@
 
 | 章節名稱 | 預計講解時長 | 預計實作時長 | 實作重點 |
 | :--- | :--- | :--- | :--- |
-| **01. Circuit Design & Verification** | 10 分鐘 | 5 分鐘 | 加法器 RTL 設計、Testbench 撰寫並使用 VCS & Verdi 進行功能模擬 |
-| **02. Lint** | 10 分鐘 | 10 分鐘 | 透過 Spyglass 實作 RTL 靜態規則檢查（Lint）與可合成性驗證 |
-| **03. Synthesis** | 15 分鐘 | 15 分鐘 | 透過 Design Compiler 進行邏輯合成、時序約束（SDC）設定並產生 Gate-Level Netlist |
-| **04. DFT** | 15 分鐘 | 15 分鐘 | 透過 DFTC 進行 One Scan Chain 的測試架構建置 |
-| **05. Presim** | 5 分鐘 | 10 分鐘 | 使用 VCS 進行含 DFT 結構之 Gate-Level 模擬 |
-| **06. ATPG** | 0 分鐘 | 10 分鐘 | 透過 TetraMAX 自動產生測試向量並進行 Fault Coverage 評估 |
-| **07. Layout** | 10 分鐘 | 0 分鐘 | 使用 ICC 進行 Floorplan、Placement、CTS 與 Routing 實體繞線 |
-| **08. STA** | 10 分鐘 | 10 分鐘 | 使用 PrimeTime 進行靜態時序分析 |
-| **09. Postsim** | 5 分鐘 | 0 分鐘 | 使用 VCS 進行含寄生參數（SPEF / SDF）之模擬 |
-| **10. Physical Verification** | 5 分鐘 | 0 分鐘 | 使用 Calibre 進行實體設計規則檢查（DRC）與電路佈局一致性比對（LVS） |
-| **Q&A 與自由實作除錯** | — | 30 分鐘 | 課堂問題解答、環境除錯與進階操作討論 |
+| **Cell-Based Design Flow (本頁)** | 5 分鐘 | 無實作 | 課程說明 |
+| **01. Circuit Design & Verification** | 5 分鐘 | 10 分鐘 | 加法器 RTL 設計、Testbench 撰寫並使用 VCS & Verdi 進行功能模擬 |
+| **02. Lint** | 5 分鐘 | 10 分鐘 | 透過 Spyglass 實作 RTL 靜態規則檢查（Lint）與可合成性驗證 |
+| **03. Synthesis** | 15 分鐘 | 10 分鐘 | 透過 Design Compiler 進行邏輯合成、時序約束（SDC）設定並產生 Gate-Level Netlist |
+| **04. DFT** | 10 分鐘 | 10 分鐘 | 透過 DFTC 進行 One Scan Chain 的測試架構建置 |
+| **05. Presim** | 5 分鐘 | 5 分鐘 | 使用 VCS 進行含 DFT 結構之 Gate-Level 模擬 |
+| **06. ATPG** | 5 分鐘 | 無實作 | 透過 TetraMAX 自動產生測試向量並進行 Fault Coverage 評估 |
+| **07. Layout** | 15 分鐘 | 10 分鐘 | 使用 ICC 進行 Floorplan、Placement、CTS 與 Routing 實體繞線 |
+| **08. STA** | 5 分鐘 | 無實作 | 使用 PrimeTime 進行靜態時序分析 |
+| **09. Postsim** | 5 分鐘 | 5 分鐘 | 使用 VCS 進行含寄生參數（SPEF / SDF）之模擬 |
+| **10. Physical Verification** | 5 分鐘 | 10 分鐘 | 使用 Calibre 進行實體設計規則檢查（DRC）與電路佈局一致性比對（LVS） |
+| **Q&A** | — | 30 分鐘 | 課堂問題解答 |
 
 ---
 
