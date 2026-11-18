@@ -170,3 +170,11 @@ cd ~/202612VLSI/VCS   # 確認位於 VCS 目錄下（若已於該資料夾開啟
 csh                   # 切換至 C Shell 環境
 menu                  # 呼叫環境選單，依畫面提示選擇，source VCS
 ```
+### 步驟二：執行模擬腳本 (runvcs)
+待終端機畫面顯示 `VCS is ready` 提示訊息，確認環境載入完成後，於同一終端機執行課程預置的模擬腳本：
+```bash
+source runvcs
+```
+
+### 步驟三：確認產生 FSDB 波形檔
+模擬執行結束後，於終端機確認 `~/202612VLSI/VCS/` 資料夾內已成功產生 `adder.fsdb` 波形檔：
