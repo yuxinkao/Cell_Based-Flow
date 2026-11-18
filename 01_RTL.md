@@ -24,6 +24,11 @@ nav_order: 2
 ---
 
 ## 2. RTL 設計範例 (adder.v)
+<div class="ws-path">
+  <strong>工作站檔案位置：</strong><code>~/202612VLSI/RTL/adder.v</code><br>
+  <strong>說明：</strong>本設計檔已預先放置於工作站專案目錄下的 <code>RTL</code> 資料夾中，檔名為 <code>adder.v</code>。
+</div>
+
 本章節著重於 RTL 驗證流程與工具操作，**不針對 Verilog 語法細節進行教學**；若同學希望深入了解可合成 RTL 撰寫規範，建議選修相關課程。
 
 ```verilog
