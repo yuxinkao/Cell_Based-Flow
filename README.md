@@ -22,15 +22,15 @@
 
 | 章節名稱 | 實作重點 |
 | :--- | :--- |
-| **01. Circuit Design & Verification** | 加法器 RTL 設計、Testbench 撰寫與功能模擬 |
-| **02. Spyglass** | RTL 靜態規則檢查（Lint）與可合成性驗證 |
-| **03. Synthesis** | 邏輯合成、時序約束（SDC）設定與 Gate-Level Netlist 產生 |
-| **04. DFT** | One Scan Chain 與掃描測試架構建置 |
-| **05. Presim** | 含 DFT 結構與延遲資訊（SDF）之 Gate-Level 模擬 |
-| **06. ATPG** | 自動測試向量產生與故障覆蓋率（Fault Coverage）評估 |
-| **07. Layout** | Floorplan、Placement、CTS 與 Routing 實體繞線 |
-| **08. STA** | 靜態時序分析與 Setup / Hold Timing Check |
-| **09. Postsim** | 繞線後萃取寄生參數（SPEF / SDF）之晶片後模擬 |
+| **01. Circuit Design & Verification** | 加法器 RTL 設計、Testbench 撰寫並使用 VCS & Verdi 進行功能模擬 |
+| **02. Lint** | 透過 Spyglass 實作 RTL 靜態規則檢查（Lint）與可合成性驗證 |
+| **03. Synthesis** | 透過 Design Compiler 進行邏輯合成、時序約束（SDC）設定並產生 Gate-Level Netlist |
+| **04. DFT** | 透過 DFTC 進行 One Scan Chain 的測試架構建置 |
+| **05. Presim** | 使用 VCS 進行含 DFT 結構之 Gate-Level 模擬 |
+| **06. ATPG** | 透過 TetraMAX 自動產生測試向量並進行 Fault Coverage 評估 |
+| **07. Layout** | 使用 ICC 進行 Floorplan、Placement、CTS 與 Routing 實體繞線 |
+| **08. STA** | 使用 PrimeTime 進行靜態時序分析 |
+| **09. Postsim** | 使用 VCS 進行含寄生參數（SPEF / SDF）之模擬 |
 | **10. Physical Verification** | DRC 與 LVS |
 
 ---
