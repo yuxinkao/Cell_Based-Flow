@@ -140,7 +140,7 @@
     margin: 4px 0 !important;
   }
 
-  /* 12. 消除表格白框並提升與暖燕麥紙底色（#f2ece1）的層次對比 */
+  /* 12. 柔和同色系書頁表格：消除純白條紋突兀感，與暖燕麥紙底色（#f2ece1）自然融合 */
   .table-wrapper {
     background-color: transparent !important;
     box-shadow: none !important;
@@ -152,8 +152,8 @@
     border-collapse: collapse !important;
     border-radius: 8px !important;
     overflow: hidden !important;
-    border: 1px solid #d5cab8 !important; /* 加入暖灰棕外框，明確界定表格邊界 */
-    box-shadow: 0 3px 10px rgba(22, 36, 54, 0.08) !important;
+    border: 1px solid #d5cab8 !important;
+    box-shadow: 0 2px 6px rgba(22, 36, 54, 0.05) !important;
   }
   th {
     background-color: #162436 !important;
@@ -161,15 +161,15 @@
     font-weight: 600 !important;
     padding: 12px 16px !important;
     text-align: left !important;
-    border-bottom: 2px solid #a1623b !important; /* 表頭下方加入暖焦糖棕分隔線 */
+    border-bottom: 2px solid #a1623b !important;
   }
   td {
-    background-color: #ffffff !important; /* 奇數列使用純白底，與網頁背景拉出清晰亮度差 */
-    border-bottom: 1px solid #e2d9cb !important;
+    background-color: #f7f3eb !important; /* 改用柔和象牙紙白，消除純白跳色感 */
+    border-bottom: 1px solid #dcd2c2 !important;
     padding: 12px 16px !important;
     color: #2c2a29 !important;
   }
   tr:nth-child(even) td {
-    background-color: #ebe3d5 !important; /* 偶數列加深為暖沙色，不再與 #f2ece1 融合 */
+    background-color: #ebe3d5 !important; /* 偶數列維持同色調暖沙色，形成低調層次 */
   }
 </style>
