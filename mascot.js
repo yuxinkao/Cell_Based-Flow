@@ -61,7 +61,7 @@ window.mascotSnap = function(cx, cy) {
   w.style.top = (cy === "top" ? topMin : Math.max(topMin, window.innerHeight - r.height - botMin)) + "px";
 };
 
-window.mascotRender = function(key, customText, replay) {
+window.mascotRender = function(key, customText) {
   var w = document.getElementById("luoluo-mascot-widget");
   var b = document.getElementById("mascot-speech-bubble");
   var img = document.getElementById("mascot-gif");
@@ -73,13 +73,7 @@ window.mascotRender = function(key, customText, replay) {
   b.textContent = customText || sc.text;
   if (sc.reload) {
     var base = img.getAttribute("data-base") || "";
-    var url = base + sc.gif;
-    if (replay) {
-      img.src = "";
-      setTimeout(function() { img.src = url; }, 10);
-    } else {
-      img.src = url;
-    }
+    img.src = base + sc.gif;
   }
   var html = "";
   for (var i = 0; i < sc.btns.length; i++) {
@@ -114,31 +108,24 @@ window.mascotGo = function(act) {
       "咚咚！大狗狗頭上的包變大顆了！🌀",
       "好痛好痛～大狗狗知道錯了嗚嗚 🏳️"
     ];
-    window.mascotRender("bonk", lines[(window.mascotBonk - 1) % lines.length], true);
+    window.mascotRender("bonk", lines[(window.mascotBonk - 1) % lines.length]);
     return;
   }
   if (act === "restart") {
     window.mascotBonk = 0;
-    window.mascotRender("intro1", null, false);
+    window.mascotRender("intro1");
     return;
   }
   if (act === "next") {
     var idx = window.mascotOrder.indexOf(window.mascotState);
     var nxt = (idx + 1) % window.mascotOrder.length;
     if (window.mascotOrder[nxt] === "intro1") window.mascotBonk = 0;
-    window.mascotRender(window.mascotOrder[nxt], null, false);
+    window.mascotRender(window.mascotOrder[nxt]);
   }
 };
 
 (function() {
   var mode = "none", sx = 0, sy = 0, ol = 0, ot = 0, ow = 155, moved = false;
-  var preImg = document.getElementById("mascot-gif");
-  var preBase = preImg ? (preImg.getAttribute("data-base") || "") : "";
-  var preFiles = ["intro.gif", "fight.gif", "bonk.gif", "pet.gif", "sleep.gif"];
-  for (var pIdx = 0; pIdx < preFiles.length; pIdx++) {
-    var tmpImg = new Image();
-    tmpImg.src = preBase + preFiles[pIdx];
-  }
   function xy(e) {
     if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
     return { x: e.clientX, y: e.clientY };
@@ -208,4 +195,7 @@ window.mascotGo = function(act) {
     else if (m === "drag" && moved && w) {
       var r = w.getBoundingClientRect();
       window.mascotSnap((r.left + r.width / 2) < window.innerWidth / 2 ? "left" : "right",
-                       (r.top + r.height / 2) < window.innerHeight / 2 ? "top" : "
+                       (r.top + r.height / 2) < window.innerHeight / 2 ? "top" : "bottom");
+    }
+  });
+})();
