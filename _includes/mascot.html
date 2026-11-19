@@ -1,30 +1,30 @@
 <style>
-  /* 右下角小蘿蘿互動總容器（完全無框，直接站在網頁角落） */
+  /* 左下角陪讀小夥伴總容器 */
   .mascot-wrapper {
     position: fixed;
-    bottom: 16px;
-    right: 28px;
+    bottom: 18px;
+    left: 20px;
     z-index: 9999;
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-start; /* 靠左對齊，對話氣泡往右上方延伸不被螢幕切掉 */
     user-select: none;
   }
 
-  /* 手繪感對話氣泡 */
+  /* 手繪感對話氣泡（尾巴朝左下角指向小蘿蘿與小狗） */
   .mascot-bubble {
     background-color: #fbf8f1;
     color: #5c3a1a;
     border: 2px solid #8c5828;
-    border-radius: 16px 16px 2px 16px;
-    padding: 8px 14px;
-    font-size: 13.5px;
+    border-radius: 16px 16px 16px 2px;
+    padding: 7px 13px;
+    font-size: 13px;
     font-weight: 600;
     line-height: 1.45;
     white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(26, 38, 52, 0.14);
-    margin-bottom: 6px;
-    opacity: 0.95;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    margin-bottom: 8px;
+    opacity: 0.96;
     transform: translateY(0) scale(1);
     pointer-events: none;
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -33,135 +33,88 @@
   .mascot-wrapper:hover .mascot-bubble,
   .mascot-wrapper.active .mascot-bubble {
     opacity: 1;
-    transform: translateY(-4px) scale(1.04);
+    transform: translateY(-4px) scale(1.03);
     border-color: #b87333;
     background-color: #fffdf8;
   }
 
-  /* 透明點擊舞台（完全沒有圓框與白底） */
+  /* 圓角米白手繪小卡片舞台（適配左下角深海軍藍側邊欄，讓圖檔白底自然融入米白底） */
   .corner-mascot {
     position: relative;
-    width: 84px;
-    height: 84px;
-    background: transparent;
-    border: none;
+    width: 112px;
+    height: 82px;
+    border-radius: 18px;
+    background-color: #fbf8f1;
+    border: 2px solid #8c5828;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
+    overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s;
   }
 
-  /* 腳底淡淡的橢圓小影子，讓角色有站在網頁上的立體感 */
-  .mascot-shadow {
-    position: absolute;
-    bottom: 6px;
-    width: 38px;
-    height: 8px;
-    background: rgba(92, 58, 26, 0.18);
-    border-radius: 50%;
-    pointer-events: none;
-    animation: shadowPulse 2.4s ease-in-out infinite;
-  }
-
-  /* 小蘿蘿本體：透過 multiply 濾掉圖檔白底，只留手繪線條與色彩 */
+  /* 小蘿蘿與小黃金獵犬本體 */
   .mascot-character {
-    width: 84px;
-    height: 84px;
+    width: 106px;
+    height: 78px;
     object-fit: contain;
-    mix-blend-mode: multiply;
+    mix-blend-mode: multiply; /* 讓圖片純白底融入米白卡片 */
     pointer-events: none;
-    animation: gentleBounce 2.4s ease-in-out infinite;
   }
 
-  .corner-mascot:hover:not(.tripped) .mascot-character {
-    animation: happyWiggle 0.6s ease-in-out infinite;
+  /* 滑鼠移過去時輕輕放大 */
+  .corner-mascot:hover {
+    transform: scale(1.05);
+    border-color: #b87333;
   }
 
-  /* 灰塵小粒子 */
-  .dust-puff {
+  /* 點擊摸摸頭時的開心搖擺動畫 */
+  .corner-mascot.petted {
+    animation: happyPet 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* 飄出的小愛心 */
+  .love-heart {
     position: absolute;
-    bottom: 10px;
+    top: 8px;
+    right: 14px;
     font-size: 15px;
     opacity: 0;
     pointer-events: none;
   }
-  .dust-left { left: 4px; }
-  .dust-right { right: 4px; }
-
-  /* 點擊觸發：往左邊撲通摔倒 -> 趴地暈眩 -> 爬起來 -> 拍拍灰塵 */
-  .corner-mascot.tripped .mascot-character {
-    animation: fallOutAndDust 2.6s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
-  }
-  .corner-mascot.tripped .mascot-shadow {
-    animation: shadowTrip 2.6s ease-in-out forwards !important;
-  }
-  .corner-mascot.tripped .dust-left {
-    animation: puffLeft 2.6s ease-out forwards;
-  }
-  .corner-mascot.tripped .dust-right {
-    animation: puffRight 2.6s ease-out forwards;
+  .corner-mascot.petted .love-heart {
+    animation: floatHeart 1.1s ease-out forwards;
   }
 
-  @keyframes gentleBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+  @keyframes happyPet {
+    0%   { transform: scale(1) rotate(0deg); }
+    25%  { transform: scale(1.08) rotate(-4deg); }
+    50%  { transform: scale(1.08) rotate(4deg); }
+    75%  { transform: scale(1.04) rotate(-2deg); }
+    100% { transform: scale(1) rotate(0deg); }
   }
 
-  @keyframes shadowPulse {
-    0%, 100% { transform: scale(1); opacity: 0.22; }
-    50% { transform: scale(0.82); opacity: 0.12; }
+  @keyframes floatHeart {
+    0%   { opacity: 0; transform: translateY(4px) scale(0.6); }
+    35%  { opacity: 1; transform: translateY(-8px) scale(1.15); }
+    100% { opacity: 0; transform: translateY(-22px) scale(1); }
   }
 
-  @keyframes happyWiggle {
-    0%, 100% { transform: scale(1.06) rotate(0deg); }
-    25% { transform: scale(1.08) rotate(-8deg); }
-    75% { transform: scale(1.08) rotate(8deg); }
-  }
-
-  /* 劇本：嚇一跳彈起 -> 往左飛撲橫躺摔倒 -> 爬起來 -> 左右扭動拍灰塵 */
-  @keyframes fallOutAndDust {
-    0%   { transform: translate(0, 0) rotate(0deg); }
-    10%  { transform: translate(-10px, -22px) rotate(-18deg); }
-    22%  { transform: translate(-42px, 12px) rotate(-88deg); }
-    27%  { transform: translate(-40px, 7px) rotate(-82deg); }
-    46%  { transform: translate(-42px, 12px) rotate(-88deg); }
-    58%  { transform: translate(-26px, -4px) rotate(-32deg); }
-    68%  { transform: translate(-6px, -10px) rotate(10deg); }
-    74%  { transform: translate(0, 0) rotate(0deg); }
-    79%  { transform: scale(1.06, 0.92) translate(0, 3px) rotate(-12deg); }
-    84%  { transform: scale(0.95, 1.06) translate(0, -3px) rotate(12deg); }
-    89%  { transform: scale(1.06, 0.92) translate(0, 3px) rotate(-10deg); }
-    94%  { transform: scale(0.96, 1.04) translate(0, -2px) rotate(8deg); }
-    100% { transform: translate(0, 0) rotate(0deg); }
-  }
-
-  @keyframes shadowTrip {
-    0%, 100% { transform: translateX(0) scaleX(1); opacity: 0.22; }
-    22%, 46% { transform: translateX(-42px) scaleX(1.6); opacity: 0.28; }
-    74%      { transform: translateX(0) scaleX(1); opacity: 0.22; }
-  }
-
-  @keyframes puffLeft {
-    0%, 76% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-    82%     { opacity: 0.95; transform: translate(-14px, -6px) scale(1.1); }
-    95%     { opacity: 0; transform: translate(-24px, -14px) scale(1.3); }
-    100%    { opacity: 0; }
-  }
-  @keyframes puffRight {
-    0%, 80% { opacity: 0; transform: translate(0, 0) scale(0.5); }
-    86%     { opacity: 0.95; transform: translate(14px, -6px) scale(1.1); }
-    98%     { opacity: 0; transform: translate(24px, -14px) scale(1.3); }
-    100%    { opacity: 0; }
+  /* 手機或窄螢幕自動隱藏，避免遮住選單 */
+  @media (max-width: 768px) {
+    .mascot-wrapper {
+      display: none;
+    }
   }
 </style>
 
 <div class="mascot-wrapper" id="mascotWrapper">
-  <div class="mascot-bubble" id="mascotBubble">欸欸！戳我一下嘛～🐷</div>
-  <div class="corner-mascot" id="cornerMascot">
-    <div class="mascot-shadow"></div>
-    <img src="{{ '/runner.gif' | relative_url }}" alt="小蘿蘿吉祥物" class="mascot-character">
-    <span class="dust-puff dust-left">💨</span>
-    <span class="dust-puff dust-right">💨</span>
+  <div class="mascot-bubble" id="mascotBubble">我們在這裡陪你一起讀書喔～🐶🍃</div>
+  <div class="corner-mascot" id="cornerMascot" title="點我摸摸小狗／連點兩下回到頂端">
+    <img src="{{ '/read.gif' | relative_url }}" alt="小蘿蘿與小黃金獵犬陪讀" class="mascot-character">
+    <span class="love-heart">💛</span>
   </div>
 </div>
 
@@ -171,60 +124,56 @@
     const mascot = document.getElementById('cornerMascot');
     const bubble = document.getElementById('mascotBubble');
 
+    // 待機陪讀台詞（安靜陪伴感）
     const idlePrompts = [
-      "欸欸！戳我一下嘛～🐷",
-      "一個人站在角落好無聊…點我陪我玩！",
-      "看講義累了嗎？戳戳看我會怎樣 ✨",
-      "豬豬帽歪掉了嗎？幫我點一下～🍃"
+      "我們在這裡陪你一起讀書喔～🐶🍃",
+      "小黃金獵犬乖乖趴著聽課中…🐾",
+      "讀累了嗎？點一下摸摸小狗吧 ✨",
+      "慢慢看沒關係，我們陪你一起破關！🐷"
     ];
 
-    const tripQuotes = [
-      "哇啊！撲通——摔個四腳朝天啦！🐷💦",
-      "哎呀！被 Timing Violation 絆倒了…😵‍💫",
-      "嗚哇！好痛痛，地板硬硬的啦～",
-      "等我一下…我這就自己爬起來…🌱",
-      "嚇我一跳！差點撞到 Scan Chain 啦！✨",
-      "哎唷喂～再戳我一次就要生氣氣囉（才怪）"
+    // 點擊摸摸互動台詞
+    const petQuotes = [
+      "汪！（小黃金獵犬開心地搖尾巴～🐶💛）",
+      "呼嚕呼嚕…被摸頭好舒服呀～✨",
+      "小蘿蘿：我們一起幫你加油，Timing 一定會過！🐷",
+      "汪嗚～看累了記得起來喝口水伸伸懶腰喔！🍃",
+      "小黃金獵犬歪頭看著你的 Verilog 程式碼…🐾"
     ];
 
     let idleIdx = 0;
-    let tripIdx = 0;
-    let dustTimer;
+    let petIdx = 0;
     let resetTimer;
 
+    // 待機時每 8 秒溫和輪換陪讀小語
     setInterval(function() {
-      if (!mascot.classList.contains('tripped') && !wrapper.matches(':hover')) {
+      if (!mascot.classList.contains('petted') && !wrapper.matches(':hover')) {
         idleIdx = (idleIdx + 1) % idlePrompts.length;
         bubble.textContent = idlePrompts[idleIdx];
       }
-    }, 6000);
+    }, 8000);
 
+    // 單擊：摸摸小狗與小蘿蘿
     mascot.addEventListener('click', function() {
-      mascot.classList.remove('tripped');
+      mascot.classList.remove('petted');
       void mascot.offsetWidth;
-      mascot.classList.add('tripped');
+      mascot.classList.add('petted');
 
-      bubble.textContent = tripQuotes[tripIdx];
-      tripIdx = (tripIdx + 1) % tripQuotes.length;
+      bubble.textContent = petQuotes[petIdx];
+      petIdx = (petIdx + 1) % petQuotes.length;
       wrapper.classList.add('active');
 
-      clearTimeout(dustTimer);
       clearTimeout(resetTimer);
-
-      dustTimer = setTimeout(function() {
-        bubble.textContent = "拍拍灰塵～呼，好險豬豬帽還在！💨🐷";
-      }, 1900);
-
       resetTimer = setTimeout(function() {
-        mascot.classList.remove('tripped');
+        mascot.classList.remove('petted');
         wrapper.classList.remove('active');
-        bubble.textContent = "站好囉！還要再戳我嗎？✨";
-      }, 3500);
+      }, 3200);
     });
 
+    // 雙擊：平滑回到網頁頂端
     mascot.addEventListener('dblclick', function() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
-      bubble.textContent = "咻——抱著豬豬帽飛回頂端囉！🚀";
+      bubble.textContent = "汪！帶你飛回頁面最上面囉～🚀";
     });
   })();
 </script>
