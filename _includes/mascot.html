@@ -1,179 +1,168 @@
+<div id="luoluo-mascot-widget" class="mascot-container" data-state="intro">
+  <div id="mascot-speech-bubble" class="mascot-bubble">
+    哈囉大家好！我是蘿蘿～這是我的大狗狗！
+  </div>
+  <div class="mascot-stage" title="點擊與蘿蘿和大狗狗互動">
+    <img id="mascot-gif" src="{{ '/assets/images/mascot/intro.gif' | relative_url }}" alt="蘿蘿與大狗狗互動小劇場" />
+  </div>
+</div>
+
 <style>
-  /* 左下角陪讀小夥伴總容器 */
-  .mascot-wrapper {
+  .mascot-container {
     position: fixed;
-    bottom: 18px;
-    left: 20px;
+    right: 24px;
+    bottom: 20px;
     z-index: 9999;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* 靠左對齊，對話氣泡往右上方延伸不被螢幕切掉 */
-    user-select: none;
-  }
-
-  /* 手繪感對話氣泡（尾巴朝左下角指向小蘿蘿與小狗） */
-  .mascot-bubble {
-    background-color: #fbf8f1;
-    color: #5c3a1a;
-    border: 2px solid #8c5828;
-    border-radius: 16px 16px 16px 2px;
-    padding: 7px 13px;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.45;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-    margin-bottom: 8px;
-    opacity: 0.96;
-    transform: translateY(0) scale(1);
-    pointer-events: none;
-    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  .mascot-wrapper:hover .mascot-bubble,
-  .mascot-wrapper.active .mascot-bubble {
-    opacity: 1;
-    transform: translateY(-4px) scale(1.03);
-    border-color: #b87333;
-    background-color: #fffdf8;
-  }
-
-  /* 圓角米白手繪小卡片舞台（適配左下角深海軍藍側邊欄，讓圖檔白底自然融入米白底） */
-  .corner-mascot {
-    position: relative;
-    width: 112px;
-    height: 82px;
-    border-radius: 18px;
-    background-color: #fbf8f1;
-    border: 2px solid #8c5828;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.28);
-    overflow: hidden;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s;
+    user-select: none;
+    font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
-  /* 小蘿蘿與小黃金獵犬本體 */
-  .mascot-character {
-    width: 106px;
-    height: 78px;
-    object-fit: contain;
-    mix-blend-mode: multiply; /* 讓圖片純白底融入米白卡片 */
-    pointer-events: none;
+  .mascot-bubble {
+    background: #ffffff;
+    color: #4a3b32;
+    border: 2px solid #f4b6c2;
+    border-radius: 18px;
+    padding: 8px 14px;
+    font-size: 13.5px;
+    font-weight: 600;
+    line-height: 1.4;
+    max-width: 210px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(244, 182, 194, 0.25);
+    margin-bottom: 8px;
+    position: relative;
+    transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
   }
 
-  /* 滑鼠移過去時輕輕放大 */
-  .corner-mascot:hover {
-    transform: scale(1.05);
-    border-color: #b87333;
-  }
-
-  /* 點擊摸摸頭時的開心搖擺動畫 */
-  .corner-mascot.petted {
-    animation: happyPet 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  /* 飄出的小愛心 */
-  .love-heart {
+  .mascot-bubble::after {
+    content: "";
     position: absolute;
-    top: 8px;
-    right: 14px;
-    font-size: 15px;
-    opacity: 0;
-    pointer-events: none;
-  }
-  .corner-mascot.petted .love-heart {
-    animation: floatHeart 1.1s ease-out forwards;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px 7px 0;
+    border-style: solid;
+    border-color: #f4b6c2 transparent transparent transparent;
   }
 
-  @keyframes happyPet {
-    0%   { transform: scale(1) rotate(0deg); }
-    25%  { transform: scale(1.08) rotate(-4deg); }
-    50%  { transform: scale(1.08) rotate(4deg); }
-    75%  { transform: scale(1.04) rotate(-2deg); }
-    100% { transform: scale(1) rotate(0deg); }
+  /* 打架狀態下的提示框強調樣式 */
+  .mascot-container[data-state="fight"] .mascot-bubble {
+    background: #fff4f6;
+    border-color: #ff6b8b;
+    color: #d6335c;
+    cursor: pointer;
+    animation: bubble-bounce 1.2s infinite ease-in-out;
   }
 
-  @keyframes floatHeart {
-    0%   { opacity: 0; transform: translateY(4px) scale(0.6); }
-    35%  { opacity: 1; transform: translateY(-8px) scale(1.15); }
-    100% { opacity: 0; transform: translateY(-22px) scale(1); }
+  .mascot-container[data-state="fight"] .mascot-stage {
+    cursor: pointer;
   }
 
-  /* 手機或窄螢幕自動隱藏，避免遮住選單 */
-  @media (max-width: 768px) {
-    .mascot-wrapper {
-      display: none;
+  .mascot-stage img {
+    width: 155px;
+    height: auto;
+    display: block;
+    /* 若 GIF 背景為純白，可開啟 multiply 讓白底自然融入淺色網頁背景 */
+    mix-blend-mode: multiply;
+    transition: transform 0.2s ease;
+  }
+
+  .mascot-container[data-state="fight"] .mascot-stage:hover img {
+    transform: scale(1.04);
+  }
+
+  @keyframes bubble-bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  @media (max-width: 640px) {
+    .mascot-container {
+      right: 12px;
+      bottom: 12px;
+    }
+    .mascot-stage img {
+      width: 120px;
+    }
+    .mascot-bubble {
+      font-size: 12px;
+      max-width: 170px;
+      padding: 6px 10px;
     }
   }
 </style>
 
-<div class="mascot-wrapper" id="mascotWrapper">
-  <div class="mascot-bubble" id="mascotBubble">我們在這裡陪你一起讀書喔～🐶🍃</div>
-  <div class="corner-mascot" id="cornerMascot" title="點我摸摸小狗／連點兩下回到頂端">
-    <img src="{{ '/read.gif' | relative_url }}" alt="小蘿蘿與小黃金獵犬陪讀" class="mascot-character">
-    <span class="love-heart">💛</span>
-  </div>
-</div>
-
 <script>
-  (function() {
-    const wrapper = document.getElementById('mascotWrapper');
-    const mascot = document.getElementById('cornerMascot');
-    const bubble = document.getElementById('mascotBubble');
+  (function () {
+    const widget = document.getElementById("luoluo-mascot-widget");
+    const bubble = document.getElementById("mascot-speech-bubble");
+    const img = document.getElementById("mascot-gif");
 
-    // 待機陪讀台詞（安靜陪伴感）
-    const idlePrompts = [
-      "我們在這裡陪你一起讀書喔～🐶🍃",
-      "小黃金獵犬乖乖趴著聽課中…🐾",
-      "讀累了嗎？點一下摸摸小狗吧 ✨",
-      "慢慢看沒關係，我們陪你一起破關！🐷"
-    ];
+    // 5 支 GIF 的路徑設定（可依實際存放位置調整）
+    const gifs = {
+      intro: "{{ '/assets/images/mascot/intro.gif' | relative_url }}",
+      fight: "{{ '/assets/images/mascot/fight.gif' | relative_url }}",
+      bonk:  "{{ '/assets/images/mascot/bonk.gif' | relative_url }}",
+      pet:   "{{ '/assets/images/mascot/pet.gif' | relative_url }}",
+      sleep: "{{ '/assets/images/mascot/sleep.gif' | relative_url }}"
+    };
 
-    // 點擊摸摸互動台詞
-    const petQuotes = [
-      "汪！（小黃金獵犬開心地搖尾巴～🐶💛）",
-      "呼嚕呼嚕…被摸頭好舒服呀～✨",
-      "小蘿蘿：我們一起幫你加油，Timing 一定會過！🐷",
-      "汪嗚～看累了記得起來喝口水伸伸懶腰喔！🍃",
-      "小黃金獵犬歪頭看著你的 Verilog 程式碼…🐾"
-    ];
+    // 各幕顯示時間（毫秒），可依 GIF 實際長度微調
+    const durations = {
+      intro: 4500, // 開場揮手抱抱播放 4.5 秒後開始搶軟糖
+      bonk:  2200, // 球棒敲頭轉場播放 2.2 秒後進入摸頭和好
+      pet:   4500  // 得逞摸頭和好播放 4.5 秒後一起睡覺
+    };
 
-    let idleIdx = 0;
-    let petIdx = 0;
-    let resetTimer;
-
-    // 待機時每 8 秒溫和輪換陪讀小語
-    setInterval(function() {
-      if (!mascot.classList.contains('petted') && !wrapper.matches(':hover')) {
-        idleIdx = (idleIdx + 1) % idlePrompts.length;
-        bubble.textContent = idlePrompts[idleIdx];
-      }
-    }, 8000);
-
-    // 單擊：摸摸小狗與小蘿蘿
-    mascot.addEventListener('click', function() {
-      mascot.classList.remove('petted');
-      void mascot.offsetWidth;
-      mascot.classList.add('petted');
-
-      bubble.textContent = petQuotes[petIdx];
-      petIdx = (petIdx + 1) % petQuotes.length;
-      wrapper.classList.add('active');
-
-      clearTimeout(resetTimer);
-      resetTimer = setTimeout(function() {
-        mascot.classList.remove('petted');
-        wrapper.classList.remove('active');
-      }, 3200);
+    // 預載所有 GIF 避免切換時閃爍
+    Object.values(gifs).forEach((src) => {
+      const preload = new Image();
+      preload.src = src;
     });
 
-    // 雙擊：平滑回到網頁頂端
-    mascot.addEventListener('dblclick', function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      bubble.textContent = "汪！帶你飛回頁面最上面囉～🚀";
+    let currentState = "intro";
+    let timer = null;
+
+    function setState(newState, text) {
+      currentState = newState;
+      widget.setAttribute("data-state", newState);
+      bubble.textContent = text;
+      // 加上時間戳參數確保每次切換都從 GIF 第一格開始播放
+      img.src = gifs[newState] + "?t=" + Date.now();
+    }
+
+    // 1. 剛進入畫面：播放 intro，結束後自動進入無限循環的 fight
+    timer = setTimeout(() => {
+      setState("fight", "打架了！點一下勸架 🍬");
+    }, durations.intro);
+
+    // 2. 點擊 widget（僅在 fight 狀態可觸發勸架；若睡著後再點擊可重播開場）
+    widget.addEventListener("click", () => {
+      if (currentState === "fight") {
+        clearTimeout(timer);
+        // 第 3 幕：讀者拿球棒敲大狗狗一下
+        setState("bonk", "咚！不准搶小熊軟糖！");
+
+        timer = setTimeout(() => {
+          // 第 4 幕：蘿蘿得逞藏軟糖並摸摸委屈大狗狗的頭
+          setState("pet", "乖乖～不哭不哭（偷藏軟糖）");
+
+          timer = setTimeout(() => {
+            // 第 5 幕：和好後一起靠著呼呼大睡
+            setState("sleep", "玩累了，一起睡覺陪你讀書 Zzz...");
+          }, durations.pet);
+        }, durations.bonk);
+      } else if (currentState === "sleep") {
+        // 睡覺狀態下如果讀者再點一下，可以重新叫醒他們從頭演一次！
+        clearTimeout(timer);
+        setState("intro", "哈囉大家好！我是蘿蘿～這是我的大狗狗！");
+        timer = setTimeout(() => {
+          setState("fight", "打架了！點一下勸架 🍬");
+        }, durations.intro);
+      }
     });
   })();
 </script>
