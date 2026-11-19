@@ -1,10 +1,10 @@
 <div id="luoluo-mascot-widget" class="mascot-container" data-state="intro">
-  <div id="mascot-speech-bubble" class="mascot-bubble" onclick="window.handleMascotClick(event)">
+  <div id="mascot-speech-bubble" class="mascot-bubble">
     哈囉！我是蘿蘿和大狗狗 👋
   </div>
   <div class="mascot-card" title="點一下與蘿蘿和大狗狗互動！">
-    <button type="button" class="mascot-toggle-btn" onclick="window.toggleMascotMinimize(event)" title="縮小／展開">−</button>
-    <div class="mascot-click-area" onclick="window.handleMascotClick(event)">
+    <button type="button" id="mascot-min-btn" class="mascot-toggle-btn" title="縮小／展開">−</button>
+    <div id="mascot-click-zone" class="mascot-click-area">
       <img id="mascot-gif" src="{{ '/intro.gif' | relative_url }}" alt="蘿蘿與大狗狗互動小劇場" />
       <span class="mascot-hint-badge" id="mascot-badge">點我互動</span>
     </div>
@@ -104,7 +104,6 @@
   .mascot-container[data-state="fight"] .mascot-hint-badge {
     background: #d9534f;
   }
-  /* 右上角迷你收合按鈕，不擋住下一章按鍵 */
   .mascot-toggle-btn {
     position: absolute;
     top: -8px;
@@ -131,7 +130,6 @@
     color: #fff;
     border-color: #9e5a2b;
   }
-  /* 縮小狀態樣式 */
   .mascot-container.is-minimized .mascot-bubble,
   .mascot-container.is-minimized .mascot-card img {
     display: none;
@@ -170,6 +168,7 @@
   for (var k in gifs) { var imgPre = new Image(); imgPre.src = gifs[k]; }
   var currentState = "intro";
   var timer = null;
+
   function setState(newState, text, badgeText) {
     var widget = document.getElementById("luoluo-mascot-widget");
     var bubble = document.getElementById("mascot-speech-bubble");
@@ -182,9 +181,11 @@
     if (badge && badgeText) badge.textContent = badgeText;
     img.src = gifs[newState] + "?t=" + Date.now();
   }
+
   function startFightLoop() {
     setState("fight", "搶軟糖打架了！點一下勸架 🍬", "點我勸架");
   }
+
   function playBonkSequence() {
     clearTimeout(timer);
     setState("bonk", "咚！不准搶小熊軟糖！", "勸架中...");
@@ -195,15 +196,29 @@
       }, durations.pet);
     }, durations.bonk);
   }
-  window.handleMascotClick = function(e) {
-    if (e) e.stopPropagation();
-    var widget = document.getElementById("luoluo-mascot-widget");
-    if (widget && widget.classList.contains("is-minimized")) {
+
+  document.addEventListener("click", function(e) {
+    var minBtn = e.target.closest("#mascot-min-btn");
+    if (minBtn) {
+      e.stopPropagation();
+      var w = document.getElementById("luoluo-mascot-widget");
+      if (w) {
+        var isMin = w.classList.toggle("is-minimized");
+        minBtn.textContent = isMin ? "+" : "−";
+      }
+      return;
+    }
+
+    var widget = e.target.closest("#luoluo-mascot-widget");
+    if (!widget) return;
+
+    if (widget.classList.contains("is-minimized")) {
       widget.classList.remove("is-minimized");
-      var btn = widget.querySelector(".mascot-toggle-btn");
+      var btn = document.getElementById("mascot-min-btn");
       if (btn) btn.textContent = "−";
       return;
     }
+
     if (currentState === "intro") {
       clearTimeout(timer);
       startFightLoop();
@@ -214,15 +229,8 @@
       setState("intro", "哈囉！我是蘿蘿和大狗狗 👋", "點我互動");
       timer = setTimeout(startFightLoop, durations.intro);
     }
-  };
-  window.toggleMascotMinimize = function(e) {
-    if (e) e.stopPropagation();
-    var widget = document.getElementById("luoluo-mascot-widget");
-    var btn = e.currentTarget;
-    if (!widget) return;
-    var minimized = widget.classList.toggle("is-minimized");
-    btn.textContent = minimized ? "+" : "−";
-  };
+  });
+
   timer = setTimeout(startFightLoop, durations.intro);
 })();
 </script>
