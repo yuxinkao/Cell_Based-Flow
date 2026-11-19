@@ -1,18 +1,18 @@
-<div id="luoluo-mascot-widget" class="mascot-container" data-state="intro1">
-  <!-- 放大版精緻對話氣泡 -->
+<div id="luoluo-mascot-widget" class="mascot-container is-right is-top" data-state="intro1">
+  <!-- 對話氣泡（停在上方角落時會在卡片下面；停在下方角落時自動翻轉到卡片上面） -->
   <div id="mascot-speech-bubble" class="mascot-bubble">
-    哈囉！我是蘿蘿~
+    哈囉！我是蘿蘿 👋
   </div>
 
-  <!-- 放大兩倍的圓角小卡片外框 -->
-  <div class="mascot-card">
-    <button type="button" id="mascot-min-btn" class="mascot-toggle-btn" title="縮小／展開">−</button>
+  <!-- 可拖曳＋可點擊互動的圓角小卡片外框 -->
+  <div class="mascot-card" id="mascot-drag-card" title="點一下互動，或按住拖曳到喜歡的角落！">
+    <button type="button" id="mascot-min-btn" class="mascot-toggle-btn" title="縮小／展開" onclick="window.mascotToggleMin(event)">-</button>
     <div id="mascot-click-zone" class="mascot-click-area">
-      <img id="mascot-gif" src="{{ '/intro.gif' | relative_url }}" alt="蘿蘿與大狗狗互動小劇場" />
+      <img id="mascot-gif" src="{{ '/intro.gif' | relative_url }}" alt="蘿蘿與大狗狗互動小劇場" draggable="false" />
     </div>
-    <!-- 底部互動按鈕區（字體維持小巧精緻不放大） -->
+    <!-- 底部互動按鈕區 -->
     <div class="mascot-actions" id="mascot-actions">
-      <button type="button" class="mascot-action-btn" data-action="next">認識大狗狗 🐾</button>
+      <button type="button" class="mascot-action-btn" onclick="window.mascotDoAction('next', event)">認識大狗狗 🐾</button>
     </div>
   </div>
 </div>
@@ -20,62 +20,83 @@
 <style>
   .mascot-container {
     position: fixed;
-    right: 24px;
-    bottom: 24px;
+    top: 68px;
+    left: calc(100vw - 292px); /* 預設停在右上角 */
     z-index: 999999;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     user-select: none;
+    touch-action: none;
     pointer-events: auto !important;
     font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
+    transition: left 0.32s cubic-bezier(0.22, 1, 0.36, 1), top 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* 放大後的暖棕米白對話氣泡 */
-  .mascot-bubble {
-    background: #fdfbf7;
-    color: #5c3d28;
-    border: 2px solid #d4b89c;
-    border-radius: 18px;
-    padding: 10px 16px;
-    font-size: 14.5px;
-    font-weight: 600;
-    line-height: 1.45;
-    max-width: 268px;
-    text-align: center;
-    box-shadow: 0 6px 16px rgba(74, 53, 37, 0.14);
+  /* 拖曳中關閉過渡動畫，讓手感完全跟手不延遲 */
+  .mascot-container.is-dragging {
+    transition: none !important;
+    cursor: grabbing !important;
+  }
+
+  .mascot-container.is-dragging .mascot-card {
+    transform: scale(1.03);
+    box-shadow: 0 16px 34px rgba(60, 42, 28, 0.28);
+    border-color: #9e5a2b;
+  }
+
+  /* 吸附到左半邊角落時，對話框靠左對齊 */
+  .mascot-container.is-left {
+    align-items: flex-start;
+  }
+
+  /* 吸附到上半部角落時：卡片在上面、對話框在下面 */
+  .mascot-container.is-top .mascot-card {
+    order: 1;
+  }
+  .mascot-container.is-top .mascot-bubble {
+    order: 2;
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+  .mascot-container.is-top .mascot-bubble::after {
+    top: -7px;
+    bottom: auto;
+    border-left: 2px solid #d4b89c;
+    border-top: 2px solid #d4b89c;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  /* 吸附到下半部角落時：對話框在上面、卡片在下面 */
+  .mascot-container.is-bottom .mascot-bubble {
+    order: 1;
     margin-bottom: 10px;
-    position: relative;
-    transition: all 0.2s ease;
+    margin-top: 0;
   }
-
-  .mascot-bubble::after {
-    content: "";
-    position: absolute;
+  .mascot-container.is-bottom .mascot-card {
+    order: 2;
+  }
+  .mascot-container.is-bottom .mascot-bubble::after {
     bottom: -7px;
-    right: 42px;
-    width: 12px;
-    height: 12px;
-    background: #fdfbf7;
+    top: auto;
     border-right: 2px solid #d4b89c;
     border-bottom: 2px solid #d4b89c;
-    transform: rotate(45deg);
+    border-left: none;
+    border-top: none;
   }
 
-  /* 打架狀態時的氣泡強調 */
-  .mascot-container[data-state="fight"] .mascot-bubble {
-    background: #fff5f5;
-    border-color: #d96b6b;
-    color: #b83b3b;
-    animation: gentle-float 1.4s infinite ease-in-out;
+  /* 左右側小三角尖角微調 */
+  .mascot-container.is-right .mascot-bubble::after {
+    right: 42px;
+    left: auto;
+  }
+  .mascot-container.is-left .mascot-bubble::after {
+    left: 42px;
+    right: auto;
   }
 
-  .mascot-container[data-state="fight"] .mascot-bubble::after {
-    background: #fff5f5;
-    border-color: #d96b6b;
-  }
-
-  /* 放大兩倍的圓角小卡片外框 */
+  /* 圓角小卡片外框 */
   .mascot-card {
     position: relative;
     background: #ffffff;
@@ -87,6 +108,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: grab;
   }
 
   .mascot-card:hover {
@@ -95,10 +117,8 @@
 
   .mascot-click-area {
     position: relative;
-    cursor: pointer;
   }
 
-  /* GIF 寬度放大兩倍（從 125px -> 240px） */
   .mascot-card img {
     width: 240px;
     height: auto;
@@ -117,7 +137,7 @@
     width: 100%;
   }
 
-  /* 互動膠囊按鈕：字體大小維持原本 11px 不變 */
+  /* 互動膠囊按鈕（字體維持 11px） */
   .mascot-action-btn {
     background: rgba(158, 90, 43, 0.94);
     color: #ffffff;
@@ -141,7 +161,6 @@
     transform: scale(0.95);
   }
 
-  /* 搶軟糖與打擊時的警示紅按鈕 */
   .mascot-action-btn.is-danger {
     background: #d9534f;
   }
@@ -150,7 +169,6 @@
     background: #b93c38;
   }
 
-  /* 溫柔次要按鈕（例如：幫牠呼呼） */
   .mascot-action-btn.is-soft {
     background: #e89b5a;
   }
@@ -159,7 +177,46 @@
     background: #d18240;
   }
 
-  /* 左上角迷你收合按鈕，方便按網頁底部的「前往下一章」 */
+  /* 對話氣泡 */
+  .mascot-bubble {
+    background: #fdfbf7;
+    color: #5c3d28;
+    border: 2px solid #d4b89c;
+    border-radius: 18px;
+    padding: 10px 16px;
+    font-size: 14.5px;
+    font-weight: 600;
+    line-height: 1.45;
+    max-width: 268px;
+    text-align: center;
+    box-shadow: 0 6px 16px rgba(74, 53, 37, 0.14);
+    position: relative;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .mascot-bubble::after {
+    content: "";
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: #fdfbf7;
+    transform: rotate(45deg);
+  }
+
+  /* 打架狀態時的氣泡強調 */
+  .mascot-container[data-state="fight"] .mascot-bubble {
+    background: #fff5f5;
+    border-color: #d96b6b;
+    color: #b83b3b;
+    animation: gentle-float 1.4s infinite ease-in-out;
+  }
+
+  .mascot-container[data-state="fight"] .mascot-bubble::after {
+    background: #fff5f5;
+    border-color: #d96b6b;
+  }
+
+  /* 左上角迷你收合按鈕 */
   .mascot-toggle-btn {
     position: absolute;
     top: -10px;
@@ -170,7 +227,7 @@
     border: 2px solid #d4b89c;
     background: #fdfbf7;
     color: #5c3d28;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: bold;
     line-height: 1;
     cursor: pointer;
@@ -185,4 +242,22 @@
   .mascot-toggle-btn:hover {
     background: #9e5a2b;
     color: #fff;
-    border-color
+    border-color: #9e5a2b;
+  }
+
+  /* 縮小狀態樣式 */
+  .mascot-container.is-minimized .mascot-bubble,
+  .mascot-container.is-minimized .mascot-click-area {
+    display: none;
+  }
+
+  .mascot-container.is-minimized .mascot-card {
+    padding: 6px 12px;
+    border-radius: 99px;
+  }
+
+  .mascot-container.is-minimized .mascot-actions {
+    margin-top: 0;
+  }
+
+  .mascot-container.is-minimized .mascot-toggle-
