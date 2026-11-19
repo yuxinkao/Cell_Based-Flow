@@ -25,7 +25,7 @@ window.mascotScenes = {
   bonk: {
     gif: "bonk.gif",
     reload: true,
-    text: "咚！小熊軟糖掉出來啦！大狗狗是壞狗狗… ",
+    text: "咚！小熊軟糖掉出來了！大狗狗是壞狗狗… ",
     btns: [
       { label: "再打一次 🏏", act: "rebonk", cls: "is-danger" },
       { label: "幫牠呼呼 🩹", act: "next", cls: "is-soft" }
