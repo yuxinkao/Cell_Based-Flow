@@ -1,9 +1,9 @@
 <style>
-  /* 右下角小蘿蘿互動總容器 */
+  /* 右下角小蘿蘿互動總容器（完全無框，直接站在網頁角落） */
   .mascot-wrapper {
     position: fixed;
-    bottom: 22px;
-    right: 36px;
+    bottom: 16px;
+    right: 28px;
     z-index: 9999;
     display: flex;
     flex-direction: column;
@@ -23,8 +23,8 @@
     line-height: 1.45;
     white-space: nowrap;
     box-shadow: 0 4px 12px rgba(26, 38, 52, 0.14);
-    margin-bottom: 12px;
-    opacity: 0.94;
+    margin-bottom: 6px;
+    opacity: 0.95;
     transform: translateY(0) scale(1);
     pointer-events: none;
     transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -38,37 +38,41 @@
     background-color: #fffdf8;
   }
 
-  /* 圓形底座舞台（允許小蘿蘿飛摔出去，不裁切） */
+  /* 透明點擊舞台（完全沒有圓框與白底） */
   .corner-mascot {
     position: relative;
-    width: 78px;
-    height: 78px;
-    border-radius: 50%;
-    background-color: #ffffff;
-    border: 2.5px solid #8c5828;
-    box-shadow: 0 4px 14px rgba(26, 38, 52, 0.18);
-    overflow: visible;
+    width: 84px;
+    height: 84px;
+    background: transparent;
+    border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
-  /* 小蘿蘿本體 */
+  /* 腳底淡淡的橢圓小影子，讓角色有站在網頁上的立體感 */
+  .mascot-shadow {
+    position: absolute;
+    bottom: 6px;
+    width: 38px;
+    height: 8px;
+    background: rgba(92, 58, 26, 0.18);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: shadowPulse 2.4s ease-in-out infinite;
+  }
+
+  /* 小蘿蘿本體：透過 multiply 濾掉圖檔白底，只留手繪線條與色彩 */
   .mascot-character {
-    width: 74px;
-    height: 74px;
+    width: 84px;
+    height: 84px;
     object-fit: contain;
-    transform: scale(1.15);
     mix-blend-mode: multiply;
     pointer-events: none;
     animation: gentleBounce 2.4s ease-in-out infinite;
   }
 
-  .corner-mascot:hover:not(.tripped) {
-    border-color: #b87333;
-  }
   .corner-mascot:hover:not(.tripped) .mascot-character {
     animation: happyWiggle 0.6s ease-in-out infinite;
   }
@@ -76,17 +80,20 @@
   /* 灰塵小粒子 */
   .dust-puff {
     position: absolute;
-    bottom: 6px;
+    bottom: 10px;
     font-size: 15px;
     opacity: 0;
     pointer-events: none;
   }
-  .dust-left { left: -6px; }
-  .dust-right { right: -6px; }
+  .dust-left { left: 4px; }
+  .dust-right { right: 4px; }
 
-  /* 點擊觸發：摔出圓框 -> 趴地暈眩 -> 爬回圓框 -> 拍拍灰塵 */
+  /* 點擊觸發：往左邊撲通摔倒 -> 趴地暈眩 -> 爬起來 -> 拍拍灰塵 */
   .corner-mascot.tripped .mascot-character {
     animation: fallOutAndDust 2.6s cubic-bezier(0.22, 1, 0.36, 1) forwards !important;
+  }
+  .corner-mascot.tripped .mascot-shadow {
+    animation: shadowTrip 2.6s ease-in-out forwards !important;
   }
   .corner-mascot.tripped .dust-left {
     animation: puffLeft 2.6s ease-out forwards;
@@ -96,30 +103,42 @@
   }
 
   @keyframes gentleBounce {
-    0%, 100% { transform: scale(1.15) translateY(0); }
-    50% { transform: scale(1.15) translateY(-5px); }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  @keyframes shadowPulse {
+    0%, 100% { transform: scale(1); opacity: 0.22; }
+    50% { transform: scale(0.82); opacity: 0.12; }
   }
 
   @keyframes happyWiggle {
-    0%, 100% { transform: scale(1.2) rotate(0deg); }
-    25% { transform: scale(1.22) rotate(-8deg); }
-    75% { transform: scale(1.22) rotate(8deg); }
+    0%, 100% { transform: scale(1.06) rotate(0deg); }
+    25% { transform: scale(1.08) rotate(-8deg); }
+    75% { transform: scale(1.08) rotate(8deg); }
   }
 
+  /* 劇本：嚇一跳彈起 -> 往左飛撲橫躺摔倒 -> 爬起來 -> 左右扭動拍灰塵 */
   @keyframes fallOutAndDust {
-    0%   { transform: scale(1.15) translate(0, 0) rotate(0deg); }
-    10%  { transform: scale(1.15) translate(-12px, -24px) rotate(-18deg); }
-    22%  { transform: scale(1.15) translate(-52px, 14px) rotate(-88deg); }
-    27%  { transform: scale(1.15) translate(-50px, 9px) rotate(-82deg); }
-    46%  { transform: scale(1.15) translate(-52px, 14px) rotate(-88deg); }
-    58%  { transform: scale(1.15) translate(-34px, -4px) rotate(-32deg); }
-    68%  { transform: scale(1.15) translate(-10px, -12px) rotate(10deg); }
-    74%  { transform: scale(1.15) translate(0, 0) rotate(0deg); }
-    79%  { transform: scale(1.18, 1.08) translate(0, 2px) rotate(-12deg); }
-    84%  { transform: scale(1.12, 1.2) translate(0, -3px) rotate(12deg); }
-    89%  { transform: scale(1.18, 1.08) translate(0, 2px) rotate(-10deg); }
-    94%  { transform: scale(1.12, 1.18) translate(0, -2px) rotate(8deg); }
-    100% { transform: scale(1.15) translate(0, 0) rotate(0deg); }
+    0%   { transform: translate(0, 0) rotate(0deg); }
+    10%  { transform: translate(-10px, -22px) rotate(-18deg); }
+    22%  { transform: translate(-42px, 12px) rotate(-88deg); }
+    27%  { transform: translate(-40px, 7px) rotate(-82deg); }
+    46%  { transform: translate(-42px, 12px) rotate(-88deg); }
+    58%  { transform: translate(-26px, -4px) rotate(-32deg); }
+    68%  { transform: translate(-6px, -10px) rotate(10deg); }
+    74%  { transform: translate(0, 0) rotate(0deg); }
+    79%  { transform: scale(1.06, 0.92) translate(0, 3px) rotate(-12deg); }
+    84%  { transform: scale(0.95, 1.06) translate(0, -3px) rotate(12deg); }
+    89%  { transform: scale(1.06, 0.92) translate(0, 3px) rotate(-10deg); }
+    94%  { transform: scale(0.96, 1.04) translate(0, -2px) rotate(8deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+  @keyframes shadowTrip {
+    0%, 100% { transform: translateX(0) scaleX(1); opacity: 0.22; }
+    22%, 46% { transform: translateX(-42px) scaleX(1.6); opacity: 0.28; }
+    74%      { transform: translateX(0) scaleX(1); opacity: 0.22; }
   }
 
   @keyframes puffLeft {
@@ -139,6 +158,7 @@
 <div class="mascot-wrapper" id="mascotWrapper">
   <div class="mascot-bubble" id="mascotBubble">欸欸！戳我一下嘛～🐷</div>
   <div class="corner-mascot" id="cornerMascot">
+    <div class="mascot-shadow"></div>
     <img src="{{ '/runner.gif' | relative_url }}" alt="小蘿蘿吉祥物" class="mascot-character">
     <span class="dust-puff dust-left">💨</span>
     <span class="dust-puff dust-right">💨</span>
@@ -153,16 +173,16 @@
 
     const idlePrompts = [
       "欸欸！戳我一下嘛～🐷",
-      "待在圈圈裡好無聊…點我陪我玩！",
+      "一個人站在角落好無聊…點我陪我玩！",
       "看講義累了嗎？戳戳看我會怎樣 ✨",
       "豬豬帽歪掉了嗎？幫我點一下～🍃"
     ];
 
     const tripQuotes = [
-      "哇啊！撲通——整隻飛出框框啦！🐷💦",
-      "哎呀！被 Timing Violation 絆飛出去了…😵‍💫",
+      "哇啊！撲通——摔個四腳朝天啦！🐷💦",
+      "哎呀！被 Timing Violation 絆倒了…😵‍💫",
       "嗚哇！好痛痛，地板硬硬的啦～",
-      "等我一下…我這就爬回圈圈裡…🌱",
+      "等我一下…我這就自己爬起來…🌱",
       "嚇我一跳！差點撞到 Scan Chain 啦！✨",
       "哎唷喂～再戳我一次就要生氣氣囉（才怪）"
     ];
