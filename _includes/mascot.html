@@ -1,32 +1,29 @@
-<div id="luoluo-mascot-widget" class="mascot-container" data-state="intro" onclick="window.handleMascotClick(event)">
-  <!-- 迷你精緻對話氣泡 -->
-  <div id="mascot-speech-bubble" class="mascot-bubble">
+<div id="luoluo-mascot-widget" class="mascot-container" data-state="intro">
+  <div id="mascot-speech-bubble" class="mascot-bubble" onclick="window.handleMascotClick(event)">
     哈囉！我是蘿蘿和大狗狗 👋
   </div>
-
-  <!-- 圓角小卡片外框 -->
   <div class="mascot-card" title="點一下與蘿蘿和大狗狗互動！">
-    <img id="mascot-gif" src="{{ '/intro.gif' | relative_url }}" alt="蘿蘿與大狗狗互動小劇場" />
-    <span class="mascot-hint-badge" id="mascot-badge">點我互動</span>
+    <button type="button" class="mascot-toggle-btn" onclick="window.toggleMascotMinimize(event)" title="縮小／展開">−</button>
+    <div class="mascot-click-area" onclick="window.handleMascotClick(event)">
+      <img id="mascot-gif" src="{{ '/intro.gif' | relative_url }}" alt="蘿蘿與大狗狗互動小劇場" />
+      <span class="mascot-hint-badge" id="mascot-badge">點我互動</span>
+    </div>
   </div>
 </div>
 
 <style>
   .mascot-container {
     position: fixed;
-    right: 22px;
-    bottom: 90px; /* 往上抬高，完整避開右下角按鈕 */
+    right: 20px;
+    bottom: 20px;
     z-index: 999999;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     user-select: none;
     pointer-events: auto !important;
-    cursor: pointer;
     font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
   }
-
-  /* 貼合網站「暖棕＋米白」質感的對話氣泡 */
   .mascot-bubble {
     background: #fdfbf7;
     color: #5c3d28;
@@ -38,12 +35,12 @@
     line-height: 1.35;
     max-width: 195px;
     text-align: center;
-    box-shadow: 0 4px 12px rgba(74, 53, 37, 0.12);
+    box-shadow: 0 4px 12px rgba(74, 53, 37, 0.14);
     margin-bottom: 8px;
     position: relative;
+    cursor: pointer;
     transition: all 0.2s ease;
   }
-
   .mascot-bubble::after {
     content: "";
     position: absolute;
@@ -56,42 +53,33 @@
     border-bottom: 1.5px solid #d4b89c;
     transform: rotate(45deg);
   }
-
-  /* 打架狀態時的提醒樣式 */
   .mascot-container[data-state="fight"] .mascot-bubble {
     background: #fff5f5;
     border-color: #d96b6b;
     color: #b83b3b;
     animation: gentle-float 1.4s infinite ease-in-out;
   }
-
   .mascot-container[data-state="fight"] .mascot-bubble::after {
     background: #fff5f5;
     border-color: #d96b6b;
   }
-
-  /* 圓角小卡片外框 */
   .mascot-card {
     position: relative;
     background: #ffffff;
     border: 2px solid #d4b89c;
     border-radius: 20px;
     padding: 6px 8px 4px;
-    box-shadow: 0 8px 20px rgba(60, 42, 28, 0.16);
-    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(60, 42, 28, 0.18);
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
-
-  .mascot-container:hover .mascot-card {
-    transform: translateY(-3px);
+  .mascot-click-area {
+    cursor: pointer;
+    position: relative;
+  }
+  .mascot-card:hover {
+    transform: translateY(-2px);
     border-color: #9e5a2b;
-    box-shadow: 0 10px 24px rgba(60, 42, 28, 0.22);
   }
-
-  .mascot-container:active .mascot-card {
-    transform: scale(0.95);
-  }
-
   .mascot-card img {
     width: 125px;
     height: auto;
@@ -99,12 +87,10 @@
     border-radius: 14px;
     pointer-events: none;
   }
-
-  /* 右下角小狀態提示標籤：常駐顯示 */
   .mascot-hint-badge {
     position: absolute;
-    bottom: 6px;
-    right: 8px;
+    bottom: 4px;
+    right: 4px;
     background: rgba(158, 90, 43, 0.92);
     color: #fff;
     font-size: 10.5px;
@@ -114,107 +100,129 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     opacity: 1;
     pointer-events: none;
-    transition: background-color 0.2s ease;
   }
-
   .mascot-container[data-state="fight"] .mascot-hint-badge {
     background: #d9534f;
   }
-
+  /* 右上角迷你收合按鈕，不擋住下一章按鍵 */
+  .mascot-toggle-btn {
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.5px solid #d4b89c;
+    background: #fdfbf7;
+    color: #5c3d28;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 10;
+    padding: 0;
+  }
+  .mascot-toggle-btn:hover {
+    background: #9e5a2b;
+    color: #fff;
+    border-color: #9e5a2b;
+  }
+  /* 縮小狀態樣式 */
+  .mascot-container.is-minimized .mascot-bubble,
+  .mascot-container.is-minimized .mascot-card img {
+    display: none;
+  }
+  .mascot-container.is-minimized .mascot-card {
+    padding: 6px 12px;
+    border-radius: 99px;
+  }
+  .mascot-container.is-minimized .mascot-hint-badge {
+    position: static;
+    display: inline-block;
+  }
+  .mascot-container.is-minimized .mascot-toggle-btn {
+    top: -6px;
+    left: -6px;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+  }
   @keyframes gentle-float {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-3px); }
   }
-
-  @media (max-width: 640px) {
-    .mascot-container {
-      right: 12px;
-      bottom: 75px;
-    }
-    .mascot-card img {
-      width: 100px;
-    }
-    .mascot-bubble {
-      font-size: 11.5px;
-      max-width: 165px;
-    }
-  }
 </style>
 
 <script>
-  (function () {
-    const gifs = {
-      intro: "{{ '/intro.gif' | relative_url }}",
-      fight: "{{ '/fight.gif' | relative_url }}",
-      bonk:  "{{ '/bonk.gif' | relative_url }}",
-      pet:   "{{ '/pet.gif' | relative_url }}",
-      sleep: "{{ '/sleep.gif' | relative_url }}"
-    };
-
-    const durations = {
-      intro: 4000,
-      bonk:  2200,
-      pet:   4500
-    };
-
-    // 預載 GIF
-    Object.values(gifs).forEach((src) => {
-      const preload = new Image();
-      preload.src = src;
-    });
-
-    let currentState = "intro";
-    let timer = null;
-
-    function setState(newState, text, badgeText) {
-      const widget = document.getElementById("luoluo-mascot-widget");
-      const bubble = document.getElementById("mascot-speech-bubble");
-      const img = document.getElementById("mascot-gif");
-      const badge = document.getElementById("mascot-badge");
-
-      if (!widget || !bubble || !img) return;
-
-      currentState = newState;
-      widget.setAttribute("data-state", newState);
-      bubble.textContent = text;
-      if (badge && badgeText) badge.textContent = badgeText;
-      img.src = gifs[newState] + "?t=" + Date.now();
+(function() {
+  var gifs = {
+    intro: "{{ '/intro.gif' | relative_url }}",
+    fight: "{{ '/fight.gif' | relative_url }}",
+    bonk:  "{{ '/bonk.gif' | relative_url }}",
+    pet:   "{{ '/pet.gif' | relative_url }}",
+    sleep: "{{ '/sleep.gif' | relative_url }}"
+  };
+  var durations = { intro: 4000, bonk: 2200, pet: 4500 };
+  for (var k in gifs) { var imgPre = new Image(); imgPre.src = gifs[k]; }
+  var currentState = "intro";
+  var timer = null;
+  function setState(newState, text, badgeText) {
+    var widget = document.getElementById("luoluo-mascot-widget");
+    var bubble = document.getElementById("mascot-speech-bubble");
+    var img = document.getElementById("mascot-gif");
+    var badge = document.getElementById("mascot-badge");
+    if (!widget || !bubble || !img) return;
+    currentState = newState;
+    widget.setAttribute("data-state", newState);
+    bubble.textContent = text;
+    if (badge && badgeText) badge.textContent = badgeText;
+    img.src = gifs[newState] + "?t=" + Date.now();
+  }
+  function startFightLoop() {
+    setState("fight", "搶軟糖打架了！點一下勸架 🍬", "點我勸架");
+  }
+  function playBonkSequence() {
+    clearTimeout(timer);
+    setState("bonk", "咚！不准搶小熊軟糖！", "勸架中...");
+    timer = setTimeout(function() {
+      setState("pet", "乖乖～不哭不哭（偷藏軟糖）", "和好中");
+      timer = setTimeout(function() {
+        setState("sleep", "吃飽玩累了，陪你一起讀書 Zzz...", "點我叫醒");
+      }, durations.pet);
+    }, durations.bonk);
+  }
+  window.handleMascotClick = function(e) {
+    if (e) e.stopPropagation();
+    var widget = document.getElementById("luoluo-mascot-widget");
+    if (widget && widget.classList.contains("is-minimized")) {
+      widget.classList.remove("is-minimized");
+      var btn = widget.querySelector(".mascot-toggle-btn");
+      if (btn) btn.textContent = "−";
+      return;
     }
-
-    function startFightLoop() {
-      setState("fight", "搶軟糖打架了！點一下勸架 🍬", "點我勸架");
-    }
-
-    function playBonkSequence() {
+    if (currentState === "intro") {
       clearTimeout(timer);
-      setState("bonk", "咚！不准搶小熊軟糖！", "勸架中...");
-
-      timer = setTimeout(() => {
-        setState("pet", "乖乖～不哭不哭（偷藏軟糖）", "和好中");
-
-        timer = setTimeout(() => {
-          setState("sleep", "吃飽玩累了，陪你一起讀書 Zzz...", "點我叫醒");
-        }, durations.pet);
-      }, durations.bonk);
+      startFightLoop();
+    } else if (currentState === "fight") {
+      playBonkSequence();
+    } else if (currentState === "sleep") {
+      clearTimeout(timer);
+      setState("intro", "哈囉！我是蘿蘿和大狗狗 👋", "點我互動");
+      timer = setTimeout(startFightLoop, durations.intro);
     }
-
-    // 掛到全域 window 上，配合 HTML 的 onclick 確保 100% 觸發
-    window.handleMascotClick = function (e) {
-      if (e) e.stopPropagation();
-
-      if (currentState === "intro") {
-        clearTimeout(timer);
-        startFightLoop();
-      } else if (currentState === "fight") {
-        playBonkSequence();
-      } else if (currentState === "sleep") {
-        clearTimeout(timer);
-        setState("intro", "哈囉！我是蘿蘿和大狗狗 👋", "點我互動");
-        timer = setTimeout(startFightLoop, durations.intro);
-      }
-    };
-
-    // 進場 4 秒後自動開始搶軟糖
-    timer = setTimeout(startFightLoop, durations.intro);
-  })();
+  };
+  window.toggleMascotMinimize = function(e) {
+    if (e) e.stopPropagation();
+    var widget = document.getElementById("luoluo-mascot-widget");
+    var btn = e.currentTarget;
+    if (!widget) return;
+    var minimized = widget.classList.toggle("is-minimized");
+    btn.textContent = minimized ? "+" : "−";
+  };
+  timer = setTimeout(startFightLoop, durations.intro);
+})();
 </script>
