@@ -289,13 +289,14 @@
   /* 網頁底部奔跑小角色容器 */
   .bottom-runner {
     position: fixed;
-    bottom: 6px;                /* 距離螢幕最底部的高度 */
-    left: -80px;                /* 從畫面左側外圍出發 */
-    width: 56px;                /* 小角色大小（可依圖片比例微調） */
+    bottom: 6px;
+    left: -80px;
+    width: 68px;                /* 稍微放大一點更清楚可愛 */
     height: auto;
     z-index: 9999;
-    pointer-events: none;       /* 讓滑鼠可以直接穿透，不會擋到網頁按鈕或選字 */
-    animation: runAcross 22s linear infinite; /* 22秒跑完一趟來回，數字越小跑越快 */
+    pointer-events: none;
+    mix-blend-mode: multiply;   /* 關鍵：自動濾掉純白背景方塊，完美融入米白底色 */
+    animation: runAcross 22s linear infinite;
   }
 
   /* 左右來回奔跑並自動轉向的關鍵影格 */
