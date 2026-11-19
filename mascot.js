@@ -61,7 +61,7 @@ window.mascotSnap = function(cx, cy) {
   w.style.top = (cy === "top" ? topMin : Math.max(topMin, window.innerHeight - r.height - botMin)) + "px";
 };
 
-window.mascotRender = function(key, customText) {
+window.mascotRender = function(key, customText, forceReplay) {
   var w = document.getElementById("luoluo-mascot-widget");
   var b = document.getElementById("mascot-speech-bubble");
   var img = document.getElementById("mascot-gif");
@@ -71,10 +71,19 @@ window.mascotRender = function(key, customText) {
   window.mascotState = key;
   w.setAttribute("data-state", key);
   b.textContent = customText || sc.text;
+
   if (sc.reload) {
     var base = img.getAttribute("data-base") || "";
-    img.src = base + sc.gif + "?t=" + Date.now();
+    var targetSrc = base + sc.gif;
+    if (forceReplay) {
+      /* 不經網路重新下載，直接從快取瞬間重播 GIF 第一格 */
+      img.src = "";
+      setTimeout(function() { img.src = targetSrc; }, 10);
+    } else {
+      img.src = targetSrc;
+    }
   }
+
   var html = "";
   for (var i = 0; i < sc.btns.length; i++) {
     var info = sc.btns[i];
@@ -108,21 +117,39 @@ window.mascotGo = function(act) {
       "咚咚！大狗狗頭上的包變大顆了！🌀",
       "好痛好痛～大狗狗知道錯了嗚嗚 🏳️"
     ];
-    window.mascotRender("bonk", lines[(window.mascotBonk - 1) % lines.length]);
+    window.mascotRender("bonk", lines[(window.mascotBonk - 1) % lines.length], true);
     return;
   }
   if (act === "restart") {
     window.mascotBonk = 0;
-    window.mascotRender("intro1");
+    window.mascotRender("intro1", null, false);
     return;
   }
   if (act === "next") {
     var idx = window.mascotOrder.indexOf(window.mascotState);
     var nxt = (idx + 1) % window.mascotOrder.length;
     if (window.mascotOrder[nxt] === "intro1") window.mascotBonk = 0;
-    window.mascotRender(window.mascotOrder[nxt]);
+    window.mascotRender(window.mascotOrder[nxt], null, false);
   }
 };
+
+/* 網頁載入後在背景預先載入所有 GIF，點擊切換時 0 秒延遲 */
+(function preloadMascotGifs() {
+  function runPreload() {
+    var img = document.getElementById("mascot-gif");
+    var base = img ? (img.getAttribute("data-base") || "") : "";
+    var list = ["intro.gif", "fight.gif", "bonk.gif", "pet.gif", "sleep.gif"];
+    for (var i = 0; i < list.length; i++) {
+      var pre = new Image();
+      pre.src = base + list[i];
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", runPreload);
+  } else {
+    runPreload();
+  }
+})();
 
 (function() {
   var mode = "none", sx = 0, sy = 0, ol = 0, ot = 0, ow = 155, moved = false;
@@ -176,26 +203,3 @@ window.mascotGo = function(act) {
         b.style.maxWidth = Math.round(210 * ratio) + "px";
         b.style.fontSize = Math.min(Math.max(11.5, 12.5 * ratio), 16) + "px";
       }
-      window.mascotSnap(window.mascotCorner.x, window.mascotCorner.y); return;
-    }
-    if (mode === "drag" && (Math.abs(dx) > 5 || Math.abs(dy) > 5)) {
-      moved = true; e.preventDefault();
-      var r = w.getBoundingClientRect();
-      var nl = Math.min(Math.max(8, ol + dx), window.innerWidth - r.width - 8);
-      var nt = Math.min(Math.max(8, ot + dy), window.innerHeight - r.height - 8);
-      w.style.right = "auto"; w.style.bottom = "auto";
-      w.style.left = nl + "px"; w.style.top = nt + "px";
-    }
-  });
-  document.addEventListener("mouseup", function() {
-    if (mode === "none") return;
-    var w = document.getElementById("luoluo-mascot-widget");
-    var m = mode; mode = "none";
-    if (m === "resize") { window.mascotSnap(window.mascotCorner.x, window.mascotCorner.y); }
-    else if (m === "drag" && moved && w) {
-      var r = w.getBoundingClientRect();
-      window.mascotSnap((r.left + r.width / 2) < window.innerWidth / 2 ? "left" : "right",
-                       (r.top + r.height / 2) < window.innerHeight / 2 ? "top" : "bottom");
-    }
-  });
-})();
