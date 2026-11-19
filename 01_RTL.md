@@ -171,6 +171,9 @@ csh                   # 切換至 C Shell 環境
 menu                  # 呼叫環境選單，依畫面提示選擇，source VCS
 ```
 ### 步驟二：執行模擬腳本 (runvcs)
+{: .note }
+> **上機提醒：** 執行 `source` 前，須先進入 `script` 資料夾內開啟 `runvcs` 檔案，將路徑內的 `Erica` 改為自己的工作站名稱（預設為學號）並存檔。
+
 待終端機畫面顯示 `VCS is ready` 提示訊息，確認環境載入完成後，於同一終端機執行課程預置的模擬腳本：
 ```bash
 source script/runvcs
