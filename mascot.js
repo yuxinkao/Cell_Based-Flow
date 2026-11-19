@@ -105,8 +105,8 @@ window.mascotGo = function(act) {
     window.mascotBonk++;
     var lines = [
       "再敲一下！不准偷吃小熊軟糖！🏏",
-      "咚咚！大狗狗頭上的包又變大顆了啦！💦",
-      "好痛好痛～大狗狗已經知道錯了嗚嗚 😭"
+      "咚咚！大狗狗頭上的包變大顆了！🌀",
+      "好痛好痛～大狗狗知道錯了嗚嗚 🏳️"
     ];
     window.mascotRender("bonk", lines[(window.mascotBonk - 1) % lines.length]);
     return;
