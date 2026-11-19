@@ -7,41 +7,41 @@ window.mascotScenes = {
   intro1: {
     gif: "intro.gif",
     reload: true,
-    text: "\u54c8\u56c9\uff01\u6211\u662f\u863f\u863f",
-    btns: [{ label: "\u8a8d\u8b58\u5927\u72d7\u72d7", act: "next", cls: "" }]
+    text: "哈囉！我是蘿蘿~ ",
+    btns: [{ label: "認識大狗狗 🐾", act: "next", cls: "" }]
   },
   intro2: {
     gif: "intro.gif",
     reload: false,
-    text: "\u65c1\u908a\u9019\u96bb\u662f\u6211\u7684\u5927\u72d7\u72d7\u5594\uff01\u54a6\u2026\u7260\u597d\u50cf\u5728\u5077\u770b\u6211\u53e3\u888b\u88e1\u7684\u5c0f\u718a\u8edf\u7cd6\uff1f",
-    btns: [{ label: "\u62ff\u51fa\u5c0f\u718a\u8edf\u7cd6", act: "next", cls: "is-soft" }]
+    text: "旁邊這隻是我的大狗狗喔！咦…牠好像在偷看我的小熊軟糖？ ",
+    btns: [{ label: "拿出小熊軟糖 🍬", act: "next", cls: "is-soft" }]
   },
   fight: {
     gif: "fight.gif",
     reload: true,
-    text: "\u55da\u54c7\uff5e\u5927\u72d7\u72d7\u4e0d\u51c6\u6436\u6211\u7684\u8edf\u7cd6\u5566\uff01",
-    btns: [{ label: "\u9ede\u64ca\u5e6b\u52a9\u863f\u863f\u6436\u8edf\u7cd6", act: "next", cls: "is-danger" }]
+    text: "嗚哇～大狗狗不要搶我的軟糖啦！ ",
+    btns: [{ label: "點擊幫助蘿蘿搶軟糖 🏏", act: "next", cls: "is-danger" }]
   },
   bonk: {
     gif: "bonk.gif",
     reload: true,
-    text: "\u549a\uff01\u5c0f\u718a\u8edf\u7cd6\u6389\u51fa\u4f86\u5566\uff01\u5927\u72d7\u72d7\u770b\u8d77\u4f86\u597d\u59d4\u5c48\u2026",
+    text: "咚！小熊軟糖掉出來啦！大狗狗是壞狗狗… ",
     btns: [
-      { label: "\u518d\u6253\u4e00\u6b21", act: "rebonk", cls: "is-danger" },
-      { label: "\u5e6b\u7260\u547c\u547c", act: "next", cls: "is-soft" }
+      { label: "再打一次 🏏", act: "rebonk", cls: "is-danger" },
+      { label: "幫牠呼呼 🩹", act: "next", cls: "is-soft" }
     ]
   },
   pet: {
     gif: "pet.gif",
     reload: true,
-    text: "\u4e56\u4e56\uff5e\u4e0d\u54ed\u4e0d\u54ed\uff08\u8d81\u6a5f\u628a\u8edf\u7cd6\u85cf\u5728\u80cc\u5f8c\u563f\u563f\uff09",
-    btns: [{ label: "\u653e\u4ed6\u5011\u53bb\u7761\u89ba", act: "next", cls: "" }]
+    text: "乖乖～不哭不哭（把糖糖藏起來嘿嘿）",
+    btns: [{ label: "放他們去睡覺 💤", act: "next", cls: "" }]
   },
   sleep: {
     gif: "sleep.gif",
     reload: true,
-    text: "\u5403\u98fd\u73a9\u7d2f\u4e86\uff0c\u7aa9\u5728\u4e00\u8d77\u966a\u4f60\u8b80\u66f8 Zzz\u2026",
-    btns: [{ label: "\u9ede\u64ca\u8d77\u5e8a\u966a\u8b80\u8005\u73a9", act: "restart", cls: "is-soft" }]
+    text: "吃飽玩累了，窩在一起陪你讀書 Zzz…",
+    btns: [{ label: "點擊起床一起玩 🎈", act: "restart", cls: "is-soft" }]
   }
 };
 
@@ -104,9 +104,9 @@ window.mascotGo = function(act) {
   if (act === "rebonk") {
     window.mascotBonk++;
     var lines = [
-      "\u518d\u6572\u4e00\u4e0b\uff01\u4e0d\u51c6\u5077\u5403\u5c0f\u718a\u8edf\u7cd6\uff01",
-      "\u549a\u549a\uff01\u5927\u72d7\u72d7\u982d\u4e0a\u7684\u5305\u53c8\u8b8a\u5927\u9846\u4e86\u5566\uff01",
-      "\u597d\u75db\u597d\u75db\uff5e\u5927\u72d7\u72d7\u5df2\u7d93\u77e5\u9053\u932f\u4e86\u55da\u55da"
+      "再敲一下！不准偷吃小熊軟糖！🏏",
+      "咚咚！大狗狗頭上的包又變大顆了啦！💦",
+      "好痛好痛～大狗狗已經知道錯了嗚嗚 😭"
     ];
     window.mascotRender("bonk", lines[(window.mascotBonk - 1) % lines.length]);
     return;
