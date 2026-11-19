@@ -1,20 +1,13 @@
-<div id="luoluo-mascot-widget" class="mascot-container is-right is-top" data-state="intro1">
-  <!-- 對話氣泡 -->
-  <div id="mascot-speech-bubble" class="mascot-bubble">
-    哈囉！我是蘿蘿 👋
-  </div>
-
-  <!-- 可拖曳移動＋可按住縮放＋可點擊互動的圓角小卡片外框 -->
+<div id="luoluo-mascot-widget" class="mascot-container is-right is-bottom" data-state="intro1">
+  <div id="mascot-speech-bubble" class="mascot-bubble">哈囉！我是蘿蘿 👋</div>
   <div class="mascot-card" id="mascot-drag-card" title="點一下互動，按住移動位置，或拖曳右下角縮放大小！">
     <button type="button" id="mascot-min-btn" class="mascot-toggle-btn" title="縮小／展開">-</button>
     <div id="mascot-click-zone" class="mascot-click-area">
       <img id="mascot-gif" src="{{ '/intro.gif' | relative_url }}" alt="蘿蘿與大狗狗互動小劇場" draggable="false" />
     </div>
-    <!-- 底部互動按鈕區 -->
     <div class="mascot-actions" id="mascot-actions">
       <button type="button" class="mascot-action-btn" data-action="next">認識大狗狗 🐾</button>
     </div>
-    <!-- 右下角按住自由放大縮小手把 -->
     <div id="mascot-resize-handle" class="mascot-resize-handle" title="按住拖曳自由放大或縮小"></div>
   </div>
 </div>
@@ -22,8 +15,8 @@
 <style>
   .mascot-container {
     position: fixed !important;
-    top: 68px;
-    left: calc(100vw - 205px);
+    right: 22px;
+    bottom: 22px;
     z-index: 2147483647 !important;
     display: flex;
     flex-direction: column;
@@ -32,28 +25,18 @@
     -webkit-user-select: none;
     pointer-events: auto !important;
     font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
-    transition: left 0.32s cubic-bezier(0.22, 1, 0.36, 1), top 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: left 0.3s cubic-bezier(0.22, 1, 0.36, 1), top 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   }
-
   .mascot-container.is-dragging,
   .mascot-container.is-resizing {
     transition: none !important;
   }
-
   .mascot-container.is-dragging {
     cursor: grabbing !important;
   }
-
-  .mascot-container.is-dragging .mascot-card,
-  .mascot-container.is-resizing .mascot-card {
-    box-shadow: 0 14px 30px rgba(60, 42, 28, 0.26);
-    border-color: #9e5a2b;
-  }
-
   .mascot-container.is-left {
     align-items: flex-start;
   }
-
   .mascot-container.is-top .mascot-card {
     order: 1;
   }
@@ -70,7 +53,6 @@
     border-right: none;
     border-bottom: none;
   }
-
   .mascot-container.is-bottom .mascot-bubble {
     order: 1;
     margin-bottom: 8px;
@@ -87,7 +69,6 @@
     border-left: none;
     border-top: none;
   }
-
   .mascot-container.is-right .mascot-bubble::after {
     right: 32px;
     left: auto;
@@ -96,7 +77,6 @@
     left: 32px;
     right: auto;
   }
-
   .mascot-card {
     position: relative;
     background: #ffffff;
@@ -104,23 +84,15 @@
     border-radius: 20px;
     padding: 8px 10px 8px;
     box-shadow: 0 8px 20px rgba(60, 42, 28, 0.16);
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
     cursor: grab;
     pointer-events: auto !important;
   }
-
   .mascot-card:hover {
     border-color: #9e5a2b;
   }
-
-  .mascot-click-area {
-    position: relative;
-  }
-
-  /* 初始大小調回清爽精緻的 155px，可透過右下角手把自由縮放 */
   .mascot-card img {
     width: 155px;
     height: auto;
@@ -128,7 +100,6 @@
     border-radius: 14px;
     pointer-events: none;
   }
-
   .mascot-actions {
     display: flex;
     flex-wrap: wrap;
@@ -138,7 +109,6 @@
     width: 100%;
     pointer-events: auto !important;
   }
-
   .mascot-action-btn {
     background: rgba(158, 90, 43, 0.94);
     color: #ffffff;
@@ -149,37 +119,24 @@
     border-radius: 99px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
     cursor: pointer;
-    transition: transform 0.15s ease, background-color 0.15s ease;
     line-height: 1.3;
     pointer-events: auto !important;
   }
-
   .mascot-action-btn:hover {
     background: #7c431c;
-    transform: translateY(-1px);
   }
-
-  .mascot-action-btn:active {
-    transform: scale(0.95);
-  }
-
   .mascot-action-btn.is-danger {
     background: #d9534f;
   }
-
   .mascot-action-btn.is-danger:hover {
     background: #b93c38;
   }
-
   .mascot-action-btn.is-soft {
     background: #e89b5a;
   }
-
   .mascot-action-btn.is-soft:hover {
     background: #d18240;
   }
-
-  /* 對話氣泡同步調整為精緻初始大小 */
   .mascot-bubble {
     background: #fdfbf7;
     color: #5c3d28;
@@ -193,9 +150,7 @@
     text-align: center;
     box-shadow: 0 4px 12px rgba(74, 53, 37, 0.14);
     position: relative;
-    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   }
-
   .mascot-bubble::after {
     content: "";
     position: absolute;
@@ -204,20 +159,15 @@
     background: #fdfbf7;
     transform: rotate(45deg);
   }
-
   .mascot-container[data-state="fight"] .mascot-bubble {
     background: #fff5f5;
     border-color: #d96b6b;
     color: #b83b3b;
-    animation: gentle-float 1.4s infinite ease-in-out;
   }
-
   .mascot-container[data-state="fight"] .mascot-bubble::after {
     background: #fff5f5;
     border-color: #d96b6b;
   }
-
-  /* 左上角一鍵收合按鈕 */
   .mascot-toggle-btn {
     position: absolute;
     top: -8px;
@@ -240,6 +190,300 @@
     padding: 0;
     pointer-events: auto !important;
   }
-
   .mascot-toggle-btn:hover {
-    background: #9e5a2b
+    background: #9e5a2b;
+    color: #fff;
+  }
+  .mascot-resize-handle {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 18px;
+    height: 18px;
+    cursor: nwse-resize;
+    z-index: 12;
+    border-bottom-right-radius: 16px;
+    opacity: 0.55;
+    background: linear-gradient(135deg, transparent 45%, #9e5a2b 45%, #9e5a2b 58%, transparent 58%, transparent 72%, #9e5a2b 72%, #9e5a2b 85%, transparent 85%);
+  }
+  .mascot-card:hover .mascot-resize-handle {
+    opacity: 1;
+  }
+  .mascot-container.is-minimized .mascot-bubble,
+  .mascot-container.is-minimized .mascot-click-area,
+  .mascot-container.is-minimized .mascot-resize-handle {
+    display: none;
+  }
+  .mascot-container.is-minimized .mascot-card {
+    padding: 6px 12px;
+    border-radius: 99px;
+  }
+  .mascot-container.is-minimized .mascot-actions {
+    margin-top: 0;
+  }
+</style>
+
+<script>
+(function() {
+  var gifs = {
+    intro: "{{ '/intro.gif' | relative_url }}",
+    fight: "{{ '/fight.gif' | relative_url }}",
+    bonk:  "{{ '/bonk.gif' | relative_url }}",
+    pet:   "{{ '/pet.gif' | relative_url }}",
+    sleep: "{{ '/sleep.gif' | relative_url }}"
+  };
+  var state = "intro1";
+  var bonkCount = 0;
+  var corner = { x: "right", y: "bottom" };
+  var mode = "none";
+  var startX = 0, startY = 0, origLeft = 0, origTop = 0, origW = 155, moved = false;
+
+  var scenes = {
+    intro1: {
+      gif: "intro", reload: true,
+      text: "\u54c8\u56c9\uff01\u6211\u662f\u863f\u863f \ud83d\udc4b",
+      btns: [{ label: "\u8a8d\u8b58\u5927\u72d7\u72d7 \ud83d\udc3e", act: "next", cls: "" }]
+    },
+    intro2: {
+      gif: "intro", reload: false,
+      text: "\u65c1\u908a\u9019\u96bb\u662f\u6211\u7684\u5927\u72d7\u72d7\u5594\uff01\u54a6\u2026\u7260\u597d\u50cf\u5728\u5077\u770b\u6211\u53e3\u888b\u88e1\u7684\u5c0f\u718a\u8edf\u7cd6\uff1f\ud83d\udc40",
+      btns: [{ label: "\u62ff\u51fa\u5c0f\u718a\u8edf\u7cd6 \ud83c\udf6c", act: "next", cls: "is-soft" }]
+    },
+    fight: {
+      gif: "fight", reload: true,
+      text: "\u55da\u54c7\uff5e\u5927\u72d7\u72d7\u4e0d\u51c6\u6436\u6211\u7684\u8edf\u7cd6\u5566\uff01( > < )",
+      btns: [{ label: "\u9ede\u64ca\u5e6b\u52a9\u863f\u863f\u6436\u8edf\u7cd6 \ud83c\udfcf", act: "next", cls: "is-danger" }]
+    },
+    bonk: {
+      gif: "bonk", reload: true,
+      text: "\u549a\uff01\u5c0f\u718a\u8edf\u7cd6\u6389\u51fa\u4f86\u5566\uff01\u5927\u72d7\u72d7\u770b\u8d77\u4f86\u597d\u59d4\u5c48\u2026\ud83e\udd7a",
+      btns: [
+        { label: "\u518d\u6253\u4e00\u6b21 \ud83c\udfcf", act: "rebonk", cls: "is-danger" },
+        { label: "\u5e6b\u7260\u547c\u547c \u2728", act: "next", cls: "is-soft" }
+      ]
+    },
+    pet: {
+      gif: "pet", reload: true,
+      text: "\u4e56\u4e56\uff5e\u4e0d\u54ed\u4e0d\u54ed\uff08\u8d81\u6a5f\u628a\u8edf\u7cd6\u85cf\u5728\u80cc\u5f8c\u563f\u563f \ud83d\ude0f\uff09",
+      btns: [{ label: "\u653e\u4ed6\u5011\u53bb\u7761\u89ba \ud83d\udca4", act: "next", cls: "" }]
+    },
+    sleep: {
+      gif: "sleep", reload: true,
+      text: "\u5403\u98fd\u73a9\u7d2f\u4e86\uff0c\u7aa9\u5728\u4e00\u8d77\u966a\u4f60\u8b80\u66f8 Zzz\u2026",
+      btns: [{ label: "\u9ede\u64ca\u8d77\u5e8a\u966a\u8b80\u8005\u73a9 \u2600\ufe0f", act: "restart", cls: "is-soft" }]
+    }
+  };
+  var order = ["intro1", "intro2", "fight", "bonk", "pet", "sleep"];
+
+  function snap(cx, cy) {
+    var w = document.getElementById("luoluo-mascot-widget");
+    if (!w) return;
+    corner.x = cx;
+    corner.y = cy;
+    w.classList.remove("is-left", "is-right", "is-top", "is-bottom");
+    w.classList.add(cx === "left" ? "is-left" : "is-right");
+    w.classList.add(cy === "top" ? "is-top" : "is-bottom");
+    w.style.right = "auto";
+    w.style.bottom = "auto";
+    var mx = window.innerWidth <= 640 ? 12 : 22;
+    var topMin = window.innerWidth <= 640 ? 60 : 66;
+    var botMin = window.innerWidth <= 640 ? 14 : 22;
+    var r = w.getBoundingClientRect();
+    var lx = cx === "left" ? mx : Math.max(mx, window.innerWidth - r.width - mx);
+    var ty = cy === "top" ? topMin : Math.max(topMin, window.innerHeight - r.height - botMin);
+    w.style.left = lx + "px";
+    w.style.top = ty + "px";
+  }
+
+  function render(key, customText) {
+    var w = document.getElementById("luoluo-mascot-widget");
+    var b = document.getElementById("mascot-speech-bubble");
+    var img = document.getElementById("mascot-gif");
+    var box = document.getElementById("mascot-actions");
+    var sc = scenes[key];
+    if (!w || !b || !img || !box || !sc) return;
+    state = key;
+    w.setAttribute("data-state", sc.gif);
+    b.textContent = customText || sc.text;
+    if (sc.reload) img.src = gifs[sc.gif] + "?t=" + Date.now();
+    box.innerHTML = "";
+    for (var i = 0; i < sc.btns.length; i++) {
+      var info = sc.btns[i];
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "mascot-action-btn" + (info.cls ? " " + info.cls : "");
+      btn.textContent = info.label;
+      btn.setAttribute("data-action", info.act);
+      box.appendChild(btn);
+    }
+    setTimeout(function() { snap(corner.x, corner.y); }, 20);
+  }
+
+  function doAction(act) {
+    var w = document.getElementById("luoluo-mascot-widget");
+    if (w && w.classList.contains("is-minimized")) {
+      w.classList.remove("is-minimized");
+      var mb = document.getElementById("mascot-min-btn");
+      if (mb) mb.textContent = "-";
+      setTimeout(function() { snap(corner.x, corner.y); }, 20);
+      return;
+    }
+    if (act === "rebonk") {
+      bonkCount++;
+      var lines = [
+        "\u518d\u6572\u4e00\u4e0b\uff01\u4e0d\u51c6\u5077\u5403\u5c0f\u718a\u8edf\u7cd6\uff01\ud83c\udfcf",
+        "\u549a\u549a\uff01\u5927\u72d7\u72d7\u982d\u4e0a\u7684\u5305\u53c8\u8b8a\u5927\u9846\u4e86\u5566\uff01\ud83d\udca6",
+        "\u597d\u75db\u597d\u75db\uff5e\u5927\u72d7\u72d7\u5df2\u7d93\u77e5\u9053\u932f\u4e86\u55da\u55da \ud83d\ude2d"
+      ];
+      render("bonk", lines[(bonkCount - 1) % lines.length]);
+      return;
+    }
+    if (act === "restart") {
+      bonkCount = 0;
+      render("intro1");
+      return;
+    }
+    if (act === "next") {
+      var idx = order.indexOf(state);
+      var nextIdx = (idx + 1) % order.length;
+      if (order[nextIdx] === "intro1") bonkCount = 0;
+      render(order[nextIdx]);
+    }
+  }
+
+  function getXY(e) {
+    if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    if (e.changedTouches && e.changedTouches.length) return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+    return { x: e.clientX, y: e.clientY };
+  }
+
+  function onDown(e) {
+    var w = document.getElementById("luoluo-mascot-widget");
+    var img = document.getElementById("mascot-gif");
+    if (!w || !img) return;
+    if (w.parentNode !== document.body) document.body.appendChild(w);
+
+    if (e.target.closest("#mascot-min-btn")) {
+      e.stopPropagation();
+      var isMin = w.classList.toggle("is-minimized");
+      e.target.closest("#mascot-min-btn").textContent = isMin ? "+" : "-";
+      setTimeout(function() { snap(corner.x, corner.y); }, 20);
+      return;
+    }
+
+    var actBtn = e.target.closest(".mascot-action-btn");
+    if (actBtn) {
+      e.stopPropagation();
+      doAction(actBtn.getAttribute("data-action"));
+      return;
+    }
+
+    var pt = getXY(e);
+    startX = pt.x;
+    startY = pt.y;
+    moved = false;
+
+    if (e.target.closest("#mascot-resize-handle")) {
+      e.stopPropagation();
+      if (e.cancelable) e.preventDefault();
+      mode = "resize";
+      origW = img.getBoundingClientRect().width || 155;
+      w.classList.add("is-resizing");
+      return;
+    }
+
+    if (e.target.closest("#mascot-drag-card")) {
+      mode = "drag";
+      var r = w.getBoundingClientRect();
+      origLeft = r.left;
+      origTop = r.top;
+    }
+  }
+
+  function onMove(e) {
+    if (mode === "none") return;
+    var w = document.getElementById("luoluo-mascot-widget");
+    var img = document.getElementById("mascot-gif");
+    var b = document.getElementById("mascot-speech-bubble");
+    if (!w || !img) return;
+    var pt = getXY(e);
+    var dx = pt.x - startX;
+    var dy = pt.y - startY;
+
+    if (mode === "resize") {
+      if (e.cancelable) e.preventDefault();
+      var delta = (corner.x === "right") ? -dx : dx;
+      var nw = Math.min(Math.max(110, origW + delta), 340);
+      img.style.width = nw + "px";
+      if (b) {
+        var ratio = nw / 155;
+        b.style.maxWidth = Math.round(210 * ratio) + "px";
+        b.style.fontSize = Math.min(Math.max(11.5, 12.5 * ratio), 16) + "px";
+      }
+      snap(corner.x, corner.y);
+      return;
+    }
+
+    if (mode === "drag") {
+      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+        moved = true;
+        w.classList.add("is-dragging");
+      }
+      if (moved) {
+        if (e.cancelable) e.preventDefault();
+        var r = w.getBoundingClientRect();
+        var nl = Math.min(Math.max(8, origLeft + dx), window.innerWidth - r.width - 8);
+        var nt = Math.min(Math.max(8, origTop + dy), window.innerHeight - r.height - 8);
+        w.style.right = "auto";
+        w.style.bottom = "auto";
+        w.style.left = nl + "px";
+        w.style.top = nt + "px";
+      }
+    }
+  }
+
+  function onUp(e) {
+    if (mode === "none") return;
+    var w = document.getElementById("luoluo-mascot-widget");
+    var prevMode = mode;
+    mode = "none";
+    if (w) {
+      w.classList.remove("is-dragging");
+      w.classList.remove("is-resizing");
+    }
+    if (prevMode === "resize") {
+      snap(corner.x, corner.y);
+      return;
+    }
+    if (prevMode === "drag") {
+      if (moved && w) {
+        var r = w.getBoundingClientRect();
+        var cx = (r.left + r.width / 2) < window.innerWidth / 2 ? "left" : "right";
+        var cy = (r.top + r.height / 2) < window.innerHeight / 2 ? "top" : "bottom";
+        snap(cx, cy);
+      } else {
+        doAction("next");
+      }
+    }
+  }
+
+  window.addEventListener("mousedown", onDown, true);
+  window.addEventListener("mousemove", onMove, true);
+  window.addEventListener("mouseup", onUp, true);
+  window.addEventListener("touchstart", onDown, { passive: true, capture: true });
+  window.addEventListener("touchmove", onMove, { passive: false, capture: true });
+  window.addEventListener("touchend", onUp, true);
+
+  function initPos() {
+    var w = document.getElementById("luoluo-mascot-widget");
+    if (w && w.parentNode !== document.body) document.body.appendChild(w);
+    snap("right", "bottom");
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initPos);
+  } else {
+    initPos();
+  }
+  window.addEventListener("resize", function() { snap(corner.x, corner.y); });
+})();
+</script>
