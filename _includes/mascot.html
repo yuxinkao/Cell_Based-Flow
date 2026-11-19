@@ -65,7 +65,6 @@
     width: 155px;
     height: auto;
     display: block;
-    /* 若 GIF 背景為純白，可開啟 multiply 讓白底自然融入淺色網頁背景 */
     mix-blend-mode: multiply;
     transition: transform 0.2s ease;
   }
@@ -101,7 +100,7 @@
     const bubble = document.getElementById("mascot-speech-bubble");
     const img = document.getElementById("mascot-gif");
 
-    // 5 支 GIF 的路徑設定（可依實際存放位置調整）
+    // 對應根目錄底下的 5 支 GIF 檔案
     const gifs = {
       intro: "{{ '/intro.gif' | relative_url }}",
       fight: "{{ '/fight.gif' | relative_url }}",
@@ -110,14 +109,12 @@
       sleep: "{{ '/sleep.gif' | relative_url }}"
     };
 
-    // 各幕顯示時間（毫秒），可依 GIF 實際長度微調
     const durations = {
-      intro: 4500, // 開場揮手抱抱播放 4.5 秒後開始搶軟糖
-      bonk:  2200, // 球棒敲頭轉場播放 2.2 秒後進入摸頭和好
-      pet:   4500  // 得逞摸頭和好播放 4.5 秒後一起睡覺
+      intro: 4500,
+      bonk:  2200,
+      pet:   4500
     };
 
-    // 預載所有 GIF 避免切換時閃爍
     Object.values(gifs).forEach((src) => {
       const preload = new Image();
       preload.src = src;
@@ -130,33 +127,26 @@
       currentState = newState;
       widget.setAttribute("data-state", newState);
       bubble.textContent = text;
-      // 加上時間戳參數確保每次切換都從 GIF 第一格開始播放
       img.src = gifs[newState] + "?t=" + Date.now();
     }
 
-    // 1. 剛進入畫面：播放 intro，結束後自動進入無限循環的 fight
     timer = setTimeout(() => {
       setState("fight", "打架了！點一下勸架 🍬");
     }, durations.intro);
 
-    // 2. 點擊 widget（僅在 fight 狀態可觸發勸架；若睡著後再點擊可重播開場）
     widget.addEventListener("click", () => {
       if (currentState === "fight") {
         clearTimeout(timer);
-        // 第 3 幕：讀者拿球棒敲大狗狗一下
         setState("bonk", "咚！不准搶小熊軟糖！");
 
         timer = setTimeout(() => {
-          // 第 4 幕：蘿蘿得逞藏軟糖並摸摸委屈大狗狗的頭
           setState("pet", "乖乖～不哭不哭（偷藏軟糖）");
 
           timer = setTimeout(() => {
-            // 第 5 幕：和好後一起靠著呼呼大睡
             setState("sleep", "玩累了，一起睡覺陪你讀書 Zzz...");
           }, durations.pet);
         }, durations.bonk);
       } else if (currentState === "sleep") {
-        // 睡覺狀態下如果讀者再點一下，可以重新叫醒他們從頭演一次！
         clearTimeout(timer);
         setState("intro", "哈囉大家好！我是蘿蘿～這是我的大狗狗！");
         timer = setTimeout(() => {
