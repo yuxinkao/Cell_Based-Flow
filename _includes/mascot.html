@@ -1,10 +1,10 @@
-<div id="luoluo-mascot-widget" class="mascot-container" data-state="intro">
+<div id="luoluo-mascot-widget" class="mascot-container" data-state="intro" onclick="window.handleMascotClick(event)">
   <!-- 迷你精緻對話氣泡 -->
   <div id="mascot-speech-bubble" class="mascot-bubble">
     哈囉！我是蘿蘿和大狗狗 👋
   </div>
 
-  <!-- 圓角小卡片外框，完美包覆 GIF 的白底，質感大升級 -->
+  <!-- 圓角小卡片外框 -->
   <div class="mascot-card" title="點一下與蘿蘿和大狗狗互動！">
     <img id="mascot-gif" src="{{ '/intro.gif' | relative_url }}" alt="蘿蘿與大狗狗互動小劇場" />
     <span class="mascot-hint-badge" id="mascot-badge">點我互動</span>
@@ -15,13 +15,14 @@
   .mascot-container {
     position: fixed;
     right: 22px;
-    bottom: 20px;
-    z-index: 99999;
+    bottom: 90px; /* 往上抬高，完整避開右下角按鈕 */
+    z-index: 999999;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     user-select: none;
-    pointer-events: auto;
+    pointer-events: auto !important;
+    cursor: pointer;
     font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
@@ -40,7 +41,6 @@
     box-shadow: 0 4px 12px rgba(74, 53, 37, 0.12);
     margin-bottom: 8px;
     position: relative;
-    cursor: pointer;
     transition: all 0.2s ease;
   }
 
@@ -70,54 +70,55 @@
     border-color: #d96b6b;
   }
 
-  /* 把 GIF 裝進圓角小卡片，徹底解決「一塊白方塊」的生硬感 */
+  /* 圓角小卡片外框 */
   .mascot-card {
     position: relative;
     background: #ffffff;
-    border: 2px solid #e6d8c8;
+    border: 2px solid #d4b89c;
     border-radius: 20px;
     padding: 6px 8px 4px;
-    box-shadow: 0 8px 20px rgba(60, 42, 28, 0.14);
-    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(60, 42, 28, 0.16);
     overflow: hidden;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
 
-  .mascot-card:hover {
+  .mascot-container:hover .mascot-card {
     transform: translateY(-3px);
-    border-color: #b87a4b;
-    box-shadow: 0 10px 24px rgba(60, 42, 28, 0.2);
+    border-color: #9e5a2b;
+    box-shadow: 0 10px 24px rgba(60, 42, 28, 0.22);
   }
 
-  .mascot-card:active {
-    transform: scale(0.96);
+  .mascot-container:active .mascot-card {
+    transform: scale(0.95);
   }
 
   .mascot-card img {
-    width: 138px;
+    width: 125px;
     height: auto;
     display: block;
     border-radius: 14px;
     pointer-events: none;
   }
 
-  /* 右下角小狀態提示標籤 */
+  /* 右下角小狀態提示標籤：常駐顯示 */
   .mascot-hint-badge {
     position: absolute;
     bottom: 6px;
     right: 8px;
-    background: rgba(158, 90, 43, 0.85);
+    background: rgba(158, 90, 43, 0.92);
     color: #fff;
-    font-size: 10px;
-    padding: 1px 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    padding: 2px 8px;
     border-radius: 99px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    opacity: 1;
+    pointer-events: none;
+    transition: background-color 0.2s ease;
   }
 
-  .mascot-card:hover .mascot-hint-badge,
   .mascot-container[data-state="fight"] .mascot-hint-badge {
-    opacity: 1;
+    background: #d9534f;
   }
 
   @keyframes gentle-float {
@@ -128,10 +129,10 @@
   @media (max-width: 640px) {
     .mascot-container {
       right: 12px;
-      bottom: 12px;
+      bottom: 75px;
     }
     .mascot-card img {
-      width: 105px;
+      width: 100px;
     }
     .mascot-bubble {
       font-size: 11.5px;
@@ -141,14 +142,7 @@
 </style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const widget = document.getElementById("luoluo-mascot-widget");
-    const bubble = document.getElementById("mascot-speech-bubble");
-    const img = document.getElementById("mascot-gif");
-    const badge = document.getElementById("mascot-badge");
-
-    if (!widget || !bubble || !img) return;
-
+  (function () {
     const gifs = {
       intro: "{{ '/intro.gif' | relative_url }}",
       fight: "{{ '/fight.gif' | relative_url }}",
@@ -163,6 +157,7 @@
       pet:   4500
     };
 
+    // 預載 GIF
     Object.values(gifs).forEach((src) => {
       const preload = new Image();
       preload.src = src;
@@ -172,6 +167,13 @@
     let timer = null;
 
     function setState(newState, text, badgeText) {
+      const widget = document.getElementById("luoluo-mascot-widget");
+      const bubble = document.getElementById("mascot-speech-bubble");
+      const img = document.getElementById("mascot-gif");
+      const badge = document.getElementById("mascot-badge");
+
+      if (!widget || !bubble || !img) return;
+
       currentState = newState;
       widget.setAttribute("data-state", newState);
       bubble.textContent = text;
@@ -196,26 +198,23 @@
       }, durations.bonk);
     }
 
-    // 1. 開場 4 秒後自動切換成搶軟糖
-    timer = setTimeout(startFightLoop, durations.intro);
-
-    // 2. 無論在哪個階段，只要滑鼠點擊卡片或對話框都立刻有反應！
-    widget.addEventListener("click", function (e) {
-      e.stopPropagation();
+    // 掛到全域 window 上，配合 HTML 的 onclick 確保 100% 觸發
+    window.handleMascotClick = function (e) {
+      if (e) e.stopPropagation();
 
       if (currentState === "intro") {
-        // 還在打招呼時點一下，直接跳進搶軟糖
         clearTimeout(timer);
         startFightLoop();
       } else if (currentState === "fight") {
-        // 搶軟糖時點一下，觸發球棒敲頭 -> 摸頭 -> 睡覺
         playBonkSequence();
       } else if (currentState === "sleep") {
-        // 睡著時點一下，重新叫醒打招呼
         clearTimeout(timer);
         setState("intro", "哈囉！我是蘿蘿和大狗狗 👋", "點我互動");
         timer = setTimeout(startFightLoop, durations.intro);
       }
-    });
-  });
+    };
+
+    // 進場 4 秒後自動開始搶軟糖
+    timer = setTimeout(startFightLoop, durations.intro);
+  })();
 </script>
