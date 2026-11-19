@@ -4,8 +4,8 @@
     哈囉！我是蘿蘿 👋
   </div>
 
-  <!-- 可拖曳＋可點擊互動的圓角小卡片外框 -->
-  <div class="mascot-card" id="mascot-drag-card" title="點一下互動，或按住拖曳到喜歡的角落！">
+  <!-- 可拖曳移動＋可按住縮放＋可點擊互動的圓角小卡片外框 -->
+  <div class="mascot-card" id="mascot-drag-card" title="點一下互動，按住移動位置，或拖曳右下角縮放大小！">
     <button type="button" id="mascot-min-btn" class="mascot-toggle-btn" title="縮小／展開">-</button>
     <div id="mascot-click-zone" class="mascot-click-area">
       <img id="mascot-gif" src="{{ '/intro.gif' | relative_url }}" alt="蘿蘿與大狗狗互動小劇場" draggable="false" />
@@ -14,6 +14,8 @@
     <div class="mascot-actions" id="mascot-actions">
       <button type="button" class="mascot-action-btn" data-action="next">認識大狗狗 🐾</button>
     </div>
+    <!-- 右下角按住自由放大縮小手把 -->
+    <div id="mascot-resize-handle" class="mascot-resize-handle" title="按住拖曳自由放大或縮小"></div>
   </div>
 </div>
 
@@ -21,7 +23,7 @@
   .mascot-container {
     position: fixed !important;
     top: 68px;
-    left: calc(100vw - 292px);
+    left: calc(100vw - 205px);
     z-index: 2147483647 !important;
     display: flex;
     flex-direction: column;
@@ -33,14 +35,18 @@
     transition: left 0.32s cubic-bezier(0.22, 1, 0.36, 1), top 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .mascot-container.is-dragging {
+  .mascot-container.is-dragging,
+  .mascot-container.is-resizing {
     transition: none !important;
+  }
+
+  .mascot-container.is-dragging {
     cursor: grabbing !important;
   }
 
-  .mascot-container.is-dragging .mascot-card {
-    transform: scale(1.03);
-    box-shadow: 0 16px 34px rgba(60, 42, 28, 0.28);
+  .mascot-container.is-dragging .mascot-card,
+  .mascot-container.is-resizing .mascot-card {
+    box-shadow: 0 14px 30px rgba(60, 42, 28, 0.26);
     border-color: #9e5a2b;
   }
 
@@ -53,52 +59,52 @@
   }
   .mascot-container.is-top .mascot-bubble {
     order: 2;
-    margin-top: 10px;
+    margin-top: 8px;
     margin-bottom: 0;
   }
   .mascot-container.is-top .mascot-bubble::after {
-    top: -7px;
+    top: -6px;
     bottom: auto;
-    border-left: 2px solid #d4b89c;
-    border-top: 2px solid #d4b89c;
+    border-left: 1.5px solid #d4b89c;
+    border-top: 1.5px solid #d4b89c;
     border-right: none;
     border-bottom: none;
   }
 
   .mascot-container.is-bottom .mascot-bubble {
     order: 1;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     margin-top: 0;
   }
   .mascot-container.is-bottom .mascot-card {
     order: 2;
   }
   .mascot-container.is-bottom .mascot-bubble::after {
-    bottom: -7px;
+    bottom: -6px;
     top: auto;
-    border-right: 2px solid #d4b89c;
-    border-bottom: 2px solid #d4b89c;
+    border-right: 1.5px solid #d4b89c;
+    border-bottom: 1.5px solid #d4b89c;
     border-left: none;
     border-top: none;
   }
 
   .mascot-container.is-right .mascot-bubble::after {
-    right: 42px;
+    right: 32px;
     left: auto;
   }
   .mascot-container.is-left .mascot-bubble::after {
-    left: 42px;
+    left: 32px;
     right: auto;
   }
 
   .mascot-card {
     position: relative;
     background: #ffffff;
-    border: 2.5px solid #d4b89c;
-    border-radius: 24px;
-    padding: 10px 12px 10px;
-    box-shadow: 0 10px 26px rgba(60, 42, 28, 0.18);
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    border: 2px solid #d4b89c;
+    border-radius: 20px;
+    padding: 8px 10px 8px;
+    box-shadow: 0 8px 20px rgba(60, 42, 28, 0.16);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -114,11 +120,12 @@
     position: relative;
   }
 
+  /* 初始大小調回清爽精緻的 155px，可透過右下角手把自由縮放 */
   .mascot-card img {
-    width: 240px;
+    width: 155px;
     height: auto;
     display: block;
-    border-radius: 16px;
+    border-radius: 14px;
     pointer-events: none;
   }
 
@@ -126,8 +133,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 6px;
-    margin-top: 8px;
+    gap: 5px;
+    margin-top: 6px;
     width: 100%;
     pointer-events: auto !important;
   }
@@ -172,18 +179,19 @@
     background: #d18240;
   }
 
+  /* 對話氣泡同步調整為精緻初始大小 */
   .mascot-bubble {
     background: #fdfbf7;
     color: #5c3d28;
-    border: 2px solid #d4b89c;
-    border-radius: 18px;
-    padding: 10px 16px;
-    font-size: 14.5px;
+    border: 1.5px solid #d4b89c;
+    border-radius: 15px;
+    padding: 7px 12px;
+    font-size: 12.5px;
     font-weight: 600;
-    line-height: 1.45;
-    max-width: 268px;
+    line-height: 1.4;
+    max-width: 210px;
     text-align: center;
-    box-shadow: 0 6px 16px rgba(74, 53, 37, 0.14);
+    box-shadow: 0 4px 12px rgba(74, 53, 37, 0.14);
     position: relative;
     transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   }
@@ -191,8 +199,8 @@
   .mascot-bubble::after {
     content: "";
     position: absolute;
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     background: #fdfbf7;
     transform: rotate(45deg);
   }
@@ -209,17 +217,18 @@
     border-color: #d96b6b;
   }
 
+  /* 左上角一鍵收合按鈕 */
   .mascot-toggle-btn {
     position: absolute;
-    top: -10px;
-    left: -10px;
-    width: 26px;
-    height: 26px;
+    top: -8px;
+    left: -8px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
-    border: 2px solid #d4b89c;
+    border: 1.5px solid #d4b89c;
     background: #fdfbf7;
     color: #5c3d28;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     line-height: 1;
     cursor: pointer;
@@ -233,324 +242,4 @@
   }
 
   .mascot-toggle-btn:hover {
-    background: #9e5a2b;
-    color: #fff;
-    border-color: #9e5a2b;
-  }
-
-  .mascot-container.is-minimized .mascot-bubble,
-  .mascot-container.is-minimized .mascot-click-area {
-    display: none;
-  }
-
-  .mascot-container.is-minimized .mascot-card {
-    padding: 6px 12px;
-    border-radius: 99px;
-  }
-
-  .mascot-container.is-minimized .mascot-actions {
-    margin-top: 0;
-  }
-
-  .mascot-container.is-minimized .mascot-toggle-btn {
-    top: -7px;
-    left: -7px;
-    width: 20px;
-    height: 20px;
-    font-size: 13px;
-  }
-
-  @keyframes gentle-float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-3px); }
-  }
-
-  @media (max-width: 640px) {
-    .mascot-card img {
-      width: 165px;
-    }
-    .mascot-bubble {
-      font-size: 13px;
-      max-width: 205px;
-      padding: 8px 12px;
-    }
-  }
-</style>
-
-<script>
-(function() {
-  var gifs = {
-    intro: "{{ '/intro.gif' | relative_url }}",
-    fight: "{{ '/fight.gif' | relative_url }}",
-    bonk:  "{{ '/bonk.gif' | relative_url }}",
-    pet:   "{{ '/pet.gif' | relative_url }}",
-    sleep: "{{ '/sleep.gif' | relative_url }}"
-  };
-
-  var currentState = "intro1";
-  var bonkCount = 0;
-  var corner = { x: "right", y: "top" };
-  var wasDragged = false;
-
-  var scenes = {
-    intro1: {
-      gif: "intro",
-      reloadGif: true,
-      text: "哈囉！我是蘿蘿 👋",
-      buttons: [
-        { label: "認識大狗狗 🐾", action: "next", style: "" }
-      ]
-    },
-    intro2: {
-      gif: "intro",
-      reloadGif: false,
-      text: "旁邊這隻是我的大狗狗喔！咦…牠好像在偷看我口袋裡的小熊軟糖？👀",
-      buttons: [
-        { label: "拿出小熊軟糖 🍬", action: "next", style: "is-soft" }
-      ]
-    },
-    fight: {
-      gif: "fight",
-      reloadGif: true,
-      text: "嗚哇～大狗狗不准搶我的軟糖啦！( > < )",
-      buttons: [
-        { label: "點擊幫助蘿蘿搶軟糖 🏏", action: "next", style: "is-danger" }
-      ]
-    },
-    bonk: {
-      gif: "bonk",
-      reloadGif: true,
-      text: "咚！小熊軟糖掉出來啦！大狗狗看起來好委屈…🥺",
-      buttons: [
-        { label: "再打一次 🏏", action: "rebonk", style: "is-danger" },
-        { label: "幫牠呼呼 ✨", action: "next", style: "is-soft" }
-      ]
-    },
-    pet: {
-      gif: "pet",
-      reloadGif: true,
-      text: "乖乖～不哭不哭（趁機把軟糖藏在背後嘿嘿 😏）",
-      buttons: [
-        { label: "放他們去睡覺 💤", action: "next", style: "" }
-      ]
-    },
-    sleep: {
-      gif: "sleep",
-      reloadGif: true,
-      text: "吃飽玩累了，窩在一起陪你讀書 Zzz…",
-      buttons: [
-        { label: "點擊起床陪讀者玩 ☀️", action: "restart", style: "is-soft" }
-      ]
-    }
-  };
-
-  var order = ["intro1", "intro2", "fight", "bonk", "pet", "sleep"];
-
-  function snapToCorner(cx, cy) {
-    var w = document.getElementById("luoluo-mascot-widget");
-    if (!w) return;
-    corner.x = cx;
-    corner.y = cy;
-
-    w.classList.remove("is-left", "is-right", "is-top", "is-bottom");
-    w.classList.add(cx === "left" ? "is-left" : "is-right");
-    w.classList.add(cy === "top" ? "is-top" : "is-bottom");
-
-    var marginX = window.innerWidth <= 640 ? 12 : 24;
-    var topOffset = window.innerWidth <= 640 ? 62 : 68;
-    var bottomMargin = window.innerWidth <= 640 ? 14 : 24;
-
-    var rect = w.getBoundingClientRect();
-    var targetLeft = cx === "left" ? marginX : Math.max(marginX, window.innerWidth - rect.width - marginX);
-    var targetTop = cy === "top" ? topOffset : Math.max(topOffset, window.innerHeight - rect.height - bottomMargin);
-
-    w.style.left = targetLeft + "px";
-    w.style.top = targetTop + "px";
-  }
-
-  function renderScene(stateKey, customText) {
-    var widget = document.getElementById("luoluo-mascot-widget");
-    var bubble = document.getElementById("mascot-speech-bubble");
-    var img = document.getElementById("mascot-gif");
-    var actionsBox = document.getElementById("mascot-actions");
-    var scene = scenes[stateKey];
-    if (!widget || !bubble || !img || !actionsBox || !scene) return;
-
-    currentState = stateKey;
-    widget.setAttribute("data-state", scene.gif);
-    bubble.textContent = customText || scene.text;
-
-    if (scene.reloadGif) {
-      img.src = gifs[scene.gif] + "?t=" + Date.now();
-    }
-
-    actionsBox.innerHTML = "";
-    for (var i = 0; i < scene.buttons.length; i++) {
-      var btnInfo = scene.buttons[i];
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "mascot-action-btn" + (btnInfo.style ? " " + btnInfo.style : "");
-      btn.textContent = btnInfo.label;
-      btn.setAttribute("data-action", btnInfo.action);
-      actionsBox.appendChild(btn);
-    }
-
-    setTimeout(function() {
-      snapToCorner(corner.x, corner.y);
-    }, 20);
-  }
-
-  function handleAction(action) {
-    var w = document.getElementById("luoluo-mascot-widget");
-    if (w && w.classList.contains("is-minimized")) {
-      w.classList.remove("is-minimized");
-      var minBtn = document.getElementById("mascot-min-btn");
-      if (minBtn) minBtn.textContent = "-";
-      setTimeout(function() { snapToCorner(corner.x, corner.y); }, 20);
-      return;
-    }
-
-    if (action === "rebonk") {
-      bonkCount++;
-      var bonkLines = [
-        "再敲一下！不准偷吃小熊軟糖！🏏",
-        "咚咚！大狗狗頭上的包又變大顆了啦！💦",
-        "好痛好痛～大狗狗已經知道錯了嗚嗚 😭"
-      ];
-      renderScene("bonk", bonkLines[(bonkCount - 1) % bonkLines.length]);
-      return;
-    }
-
-    if (action === "restart") {
-      bonkCount = 0;
-      renderScene("intro1");
-      return;
-    }
-
-    if (action === "next") {
-      var idx = order.indexOf(currentState);
-      var nextIdx = (idx + 1) % order.length;
-      if (order[nextIdx] === "intro1") bonkCount = 0;
-      renderScene(order[nextIdx]);
-    }
-  }
-
-  function setupMascot() {
-    var widget = document.getElementById("luoluo-mascot-widget");
-    var card = document.getElementById("mascot-drag-card");
-    if (!widget || !card) return;
-
-    /* 關鍵突破：直接搬移到 body 最尾端，擺脫任何外層容器遮罩或 z-index 限制 */
-    if (widget.parentNode !== document.body) {
-      document.body.appendChild(widget);
-    }
-
-    snapToCorner("right", "top");
-    window.addEventListener("resize", function() {
-      snapToCorner(corner.x, corner.y);
-    });
-
-    /* 縮小按鈕點擊 */
-    var minBtn = document.getElementById("mascot-min-btn");
-    if (minBtn) {
-      minBtn.addEventListener("click", function(e) {
-        e.stopPropagation();
-        var isMin = widget.classList.toggle("is-minimized");
-        minBtn.textContent = isMin ? "+" : "-";
-        setTimeout(function() { snapToCorner(corner.x, corner.y); }, 20);
-      });
-    }
-
-    /* 底部互動按鈕區點擊（事件委派） */
-    var actionsBox = document.getElementById("mascot-actions");
-    if (actionsBox) {
-      actionsBox.addEventListener("click", function(e) {
-        var btn = e.target.closest(".mascot-action-btn");
-        if (!btn) return;
-        e.stopPropagation();
-        handleAction(btn.getAttribute("data-action"));
-      });
-    }
-
-    /* 標準滑鼠＋觸控拖曳偵測 */
-    var isDown = false;
-    var startX = 0, startY = 0;
-    var origLeft = 0, origTop = 0;
-
-    function getClientXY(e) {
-      if (e.touches && e.touches.length > 0) {
-        return { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      }
-      if (e.changedTouches && e.changedTouches.length > 0) {
-        return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
-      }
-      return { x: e.clientX, y: e.clientY };
-    }
-
-    function onDragStart(e) {
-      if (e.target.closest("button")) return;
-      isDown = true;
-      wasDragged = false;
-      var pt = getClientXY(e);
-      startX = pt.x;
-      startY = pt.y;
-      var rect = widget.getBoundingClientRect();
-      origLeft = rect.left;
-      origTop = rect.top;
-    }
-
-    function onDragMove(e) {
-      if (!isDown) return;
-      var pt = getClientXY(e);
-      var dx = pt.x - startX;
-      var dy = pt.y - startY;
-
-      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-        wasDragged = true;
-        widget.classList.add("is-dragging");
-      }
-
-      if (wasDragged) {
-        if (e.cancelable) e.preventDefault();
-        var rect = widget.getBoundingClientRect();
-        var newLeft = Math.min(Math.max(8, origLeft + dx), window.innerWidth - rect.width - 8);
-        var newTop = Math.min(Math.max(8, origTop + dy), window.innerHeight - rect.height - 8);
-        widget.style.left = newLeft + "px";
-        widget.style.top = newTop + "px";
-      }
-    }
-
-    function onDragEnd(e) {
-      if (!isDown) return;
-      isDown = false;
-      widget.classList.remove("is-dragging");
-
-      if (wasDragged) {
-        var rect = widget.getBoundingClientRect();
-        var centerX = rect.left + rect.width / 2;
-        var centerY = rect.top + rect.height / 2;
-        var targetX = centerX < window.innerWidth / 2 ? "left" : "right";
-        var targetY = centerY < window.innerHeight / 2 ? "top" : "bottom";
-        snapToCorner(targetX, targetY);
-        setTimeout(function() { wasDragged = false; }, 50);
-      } else if (!e.target.closest("button")) {
-        handleAction("next");
-      }
-    }
-
-    card.addEventListener("mousedown", onDragStart);
-    document.addEventListener("mousemove", onDragMove);
-    document.addEventListener("mouseup", onDragEnd);
-
-    card.addEventListener("touchstart", onDragStart, { passive: true });
-    document.addEventListener("touchmove", onDragMove, { passive: false });
-    document.addEventListener("touchend", onDragEnd);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupMascot);
-  } else {
-    setupMascot();
-  }
-})();
-</script>
+    background: #9e5a2b
