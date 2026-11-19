@@ -20,7 +20,7 @@ window.mascotScenes = {
     gif: "fight.gif",
     reload: true,
     text: "嗚哇～大狗狗不要搶我的軟糖啦！ ",
-    btns: [{ label: "點擊幫助蘿蘿搶軟糖 🏏", act: "next", cls: "is-danger" }]
+    btns: [{ label: "幫助蘿蘿搶軟糖 🏏", act: "next", cls: "is-danger" }]
   },
   bonk: {
     gif: "bonk.gif",
@@ -41,7 +41,7 @@ window.mascotScenes = {
     gif: "sleep.gif",
     reload: true,
     text: "吃飽玩累了，窩在一起陪你讀書 Zzz…",
-    btns: [{ label: "點擊起床一起玩 🎈", act: "restart", cls: "is-soft" }]
+    btns: [{ label: "起床一起玩 🎈", act: "restart", cls: "is-soft" }]
   }
 };
 
