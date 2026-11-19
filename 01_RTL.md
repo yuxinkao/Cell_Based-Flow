@@ -206,6 +206,8 @@ source script/runvcs
 ```
 
 ### 步驟二：執行波形檢視腳本 (`runverdi`)
+> **上機提醒：** 執行 `source` 前，須先進入 `script` 資料夾內開啟 `runverdi` 檔案，將路徑內的 `Erica` 改為自己的工作站名稱（預設為學號）並存檔。
+
 待終端機畫面顯示 **`Verdi is ready`** 提示訊息，確認環境變數載入完成後，於同一終端機執行課程預置的啟動腳本：
 
     source script/runverdi
