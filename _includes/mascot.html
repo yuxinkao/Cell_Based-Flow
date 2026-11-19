@@ -1,39 +1,38 @@
 <div id="luoluo-mascot-widget" class="mascot-container is-right is-top" data-state="intro1">
-  <!-- 對話氣泡（停在上方角落時會在卡片下面；停在下方角落時自動翻轉到卡片上面） -->
+  <!-- 對話氣泡 -->
   <div id="mascot-speech-bubble" class="mascot-bubble">
     哈囉！我是蘿蘿 👋
   </div>
 
   <!-- 可拖曳＋可點擊互動的圓角小卡片外框 -->
   <div class="mascot-card" id="mascot-drag-card" title="點一下互動，或按住拖曳到喜歡的角落！">
-    <button type="button" id="mascot-min-btn" class="mascot-toggle-btn" title="縮小／展開" onclick="window.mascotToggleMin(event)">-</button>
+    <button type="button" id="mascot-min-btn" class="mascot-toggle-btn" title="縮小／展開">-</button>
     <div id="mascot-click-zone" class="mascot-click-area">
       <img id="mascot-gif" src="{{ '/intro.gif' | relative_url }}" alt="蘿蘿與大狗狗互動小劇場" draggable="false" />
     </div>
     <!-- 底部互動按鈕區 -->
     <div class="mascot-actions" id="mascot-actions">
-      <button type="button" class="mascot-action-btn" onclick="window.mascotDoAction('next', event)">認識大狗狗 🐾</button>
+      <button type="button" class="mascot-action-btn" data-action="next">認識大狗狗 🐾</button>
     </div>
   </div>
 </div>
 
 <style>
   .mascot-container {
-    position: fixed;
+    position: fixed !important;
     top: 68px;
-    left: calc(100vw - 292px); /* 預設停在右上角 */
-    z-index: 999999;
+    left: calc(100vw - 292px);
+    z-index: 2147483647 !important;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     user-select: none;
-    touch-action: none;
+    -webkit-user-select: none;
     pointer-events: auto !important;
     font-family: "Noto Sans TC", -apple-system, BlinkMacSystemFont, sans-serif;
     transition: left 0.32s cubic-bezier(0.22, 1, 0.36, 1), top 0.32s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* 拖曳中關閉過渡動畫，讓手感完全跟手不延遲 */
   .mascot-container.is-dragging {
     transition: none !important;
     cursor: grabbing !important;
@@ -45,12 +44,10 @@
     border-color: #9e5a2b;
   }
 
-  /* 吸附到左半邊角落時，對話框靠左對齊 */
   .mascot-container.is-left {
     align-items: flex-start;
   }
 
-  /* 吸附到上半部角落時：卡片在上面、對話框在下面 */
   .mascot-container.is-top .mascot-card {
     order: 1;
   }
@@ -68,7 +65,6 @@
     border-bottom: none;
   }
 
-  /* 吸附到下半部角落時：對話框在上面、卡片在下面 */
   .mascot-container.is-bottom .mascot-bubble {
     order: 1;
     margin-bottom: 10px;
@@ -86,7 +82,6 @@
     border-top: none;
   }
 
-  /* 左右側小三角尖角微調 */
   .mascot-container.is-right .mascot-bubble::after {
     right: 42px;
     left: auto;
@@ -96,7 +91,6 @@
     right: auto;
   }
 
-  /* 圓角小卡片外框 */
   .mascot-card {
     position: relative;
     background: #ffffff;
@@ -109,6 +103,7 @@
     flex-direction: column;
     align-items: center;
     cursor: grab;
+    pointer-events: auto !important;
   }
 
   .mascot-card:hover {
@@ -127,7 +122,6 @@
     pointer-events: none;
   }
 
-  /* 底部互動按鈕容器 */
   .mascot-actions {
     display: flex;
     flex-wrap: wrap;
@@ -135,9 +129,9 @@
     gap: 6px;
     margin-top: 8px;
     width: 100%;
+    pointer-events: auto !important;
   }
 
-  /* 互動膠囊按鈕（字體維持 11px） */
   .mascot-action-btn {
     background: rgba(158, 90, 43, 0.94);
     color: #ffffff;
@@ -150,6 +144,7 @@
     cursor: pointer;
     transition: transform 0.15s ease, background-color 0.15s ease;
     line-height: 1.3;
+    pointer-events: auto !important;
   }
 
   .mascot-action-btn:hover {
@@ -177,7 +172,6 @@
     background: #d18240;
   }
 
-  /* 對話氣泡 */
   .mascot-bubble {
     background: #fdfbf7;
     color: #5c3d28;
@@ -203,7 +197,6 @@
     transform: rotate(45deg);
   }
 
-  /* 打架狀態時的氣泡強調 */
   .mascot-container[data-state="fight"] .mascot-bubble {
     background: #fff5f5;
     border-color: #d96b6b;
@@ -216,7 +209,6 @@
     border-color: #d96b6b;
   }
 
-  /* 左上角迷你收合按鈕 */
   .mascot-toggle-btn {
     position: absolute;
     top: -10px;
@@ -237,6 +229,7 @@
     box-shadow: 0 2px 6px rgba(0,0,0,0.16);
     z-index: 10;
     padding: 0;
+    pointer-events: auto !important;
   }
 
   .mascot-toggle-btn:hover {
@@ -245,7 +238,6 @@
     border-color: #9e5a2b;
   }
 
-  /* 縮小狀態樣式 */
   .mascot-container.is-minimized .mascot-bubble,
   .mascot-container.is-minimized .mascot-click-area {
     display: none;
@@ -260,4 +252,305 @@
     margin-top: 0;
   }
 
-  .mascot-container.is-minimized .mascot-toggle-
+  .mascot-container.is-minimized .mascot-toggle-btn {
+    top: -7px;
+    left: -7px;
+    width: 20px;
+    height: 20px;
+    font-size: 13px;
+  }
+
+  @keyframes gentle-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+
+  @media (max-width: 640px) {
+    .mascot-card img {
+      width: 165px;
+    }
+    .mascot-bubble {
+      font-size: 13px;
+      max-width: 205px;
+      padding: 8px 12px;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  var gifs = {
+    intro: "{{ '/intro.gif' | relative_url }}",
+    fight: "{{ '/fight.gif' | relative_url }}",
+    bonk:  "{{ '/bonk.gif' | relative_url }}",
+    pet:   "{{ '/pet.gif' | relative_url }}",
+    sleep: "{{ '/sleep.gif' | relative_url }}"
+  };
+
+  var currentState = "intro1";
+  var bonkCount = 0;
+  var corner = { x: "right", y: "top" };
+  var wasDragged = false;
+
+  var scenes = {
+    intro1: {
+      gif: "intro",
+      reloadGif: true,
+      text: "哈囉！我是蘿蘿 👋",
+      buttons: [
+        { label: "認識大狗狗 🐾", action: "next", style: "" }
+      ]
+    },
+    intro2: {
+      gif: "intro",
+      reloadGif: false,
+      text: "旁邊這隻是我的大狗狗喔！咦…牠好像在偷看我口袋裡的小熊軟糖？👀",
+      buttons: [
+        { label: "拿出小熊軟糖 🍬", action: "next", style: "is-soft" }
+      ]
+    },
+    fight: {
+      gif: "fight",
+      reloadGif: true,
+      text: "嗚哇～大狗狗不准搶我的軟糖啦！( > < )",
+      buttons: [
+        { label: "點擊幫助蘿蘿搶軟糖 🏏", action: "next", style: "is-danger" }
+      ]
+    },
+    bonk: {
+      gif: "bonk",
+      reloadGif: true,
+      text: "咚！小熊軟糖掉出來啦！大狗狗看起來好委屈…🥺",
+      buttons: [
+        { label: "再打一次 🏏", action: "rebonk", style: "is-danger" },
+        { label: "幫牠呼呼 ✨", action: "next", style: "is-soft" }
+      ]
+    },
+    pet: {
+      gif: "pet",
+      reloadGif: true,
+      text: "乖乖～不哭不哭（趁機把軟糖藏在背後嘿嘿 😏）",
+      buttons: [
+        { label: "放他們去睡覺 💤", action: "next", style: "" }
+      ]
+    },
+    sleep: {
+      gif: "sleep",
+      reloadGif: true,
+      text: "吃飽玩累了，窩在一起陪你讀書 Zzz…",
+      buttons: [
+        { label: "點擊起床陪讀者玩 ☀️", action: "restart", style: "is-soft" }
+      ]
+    }
+  };
+
+  var order = ["intro1", "intro2", "fight", "bonk", "pet", "sleep"];
+
+  function snapToCorner(cx, cy) {
+    var w = document.getElementById("luoluo-mascot-widget");
+    if (!w) return;
+    corner.x = cx;
+    corner.y = cy;
+
+    w.classList.remove("is-left", "is-right", "is-top", "is-bottom");
+    w.classList.add(cx === "left" ? "is-left" : "is-right");
+    w.classList.add(cy === "top" ? "is-top" : "is-bottom");
+
+    var marginX = window.innerWidth <= 640 ? 12 : 24;
+    var topOffset = window.innerWidth <= 640 ? 62 : 68;
+    var bottomMargin = window.innerWidth <= 640 ? 14 : 24;
+
+    var rect = w.getBoundingClientRect();
+    var targetLeft = cx === "left" ? marginX : Math.max(marginX, window.innerWidth - rect.width - marginX);
+    var targetTop = cy === "top" ? topOffset : Math.max(topOffset, window.innerHeight - rect.height - bottomMargin);
+
+    w.style.left = targetLeft + "px";
+    w.style.top = targetTop + "px";
+  }
+
+  function renderScene(stateKey, customText) {
+    var widget = document.getElementById("luoluo-mascot-widget");
+    var bubble = document.getElementById("mascot-speech-bubble");
+    var img = document.getElementById("mascot-gif");
+    var actionsBox = document.getElementById("mascot-actions");
+    var scene = scenes[stateKey];
+    if (!widget || !bubble || !img || !actionsBox || !scene) return;
+
+    currentState = stateKey;
+    widget.setAttribute("data-state", scene.gif);
+    bubble.textContent = customText || scene.text;
+
+    if (scene.reloadGif) {
+      img.src = gifs[scene.gif] + "?t=" + Date.now();
+    }
+
+    actionsBox.innerHTML = "";
+    for (var i = 0; i < scene.buttons.length; i++) {
+      var btnInfo = scene.buttons[i];
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "mascot-action-btn" + (btnInfo.style ? " " + btnInfo.style : "");
+      btn.textContent = btnInfo.label;
+      btn.setAttribute("data-action", btnInfo.action);
+      actionsBox.appendChild(btn);
+    }
+
+    setTimeout(function() {
+      snapToCorner(corner.x, corner.y);
+    }, 20);
+  }
+
+  function handleAction(action) {
+    var w = document.getElementById("luoluo-mascot-widget");
+    if (w && w.classList.contains("is-minimized")) {
+      w.classList.remove("is-minimized");
+      var minBtn = document.getElementById("mascot-min-btn");
+      if (minBtn) minBtn.textContent = "-";
+      setTimeout(function() { snapToCorner(corner.x, corner.y); }, 20);
+      return;
+    }
+
+    if (action === "rebonk") {
+      bonkCount++;
+      var bonkLines = [
+        "再敲一下！不准偷吃小熊軟糖！🏏",
+        "咚咚！大狗狗頭上的包又變大顆了啦！💦",
+        "好痛好痛～大狗狗已經知道錯了嗚嗚 😭"
+      ];
+      renderScene("bonk", bonkLines[(bonkCount - 1) % bonkLines.length]);
+      return;
+    }
+
+    if (action === "restart") {
+      bonkCount = 0;
+      renderScene("intro1");
+      return;
+    }
+
+    if (action === "next") {
+      var idx = order.indexOf(currentState);
+      var nextIdx = (idx + 1) % order.length;
+      if (order[nextIdx] === "intro1") bonkCount = 0;
+      renderScene(order[nextIdx]);
+    }
+  }
+
+  function setupMascot() {
+    var widget = document.getElementById("luoluo-mascot-widget");
+    var card = document.getElementById("mascot-drag-card");
+    if (!widget || !card) return;
+
+    /* 關鍵突破：直接搬移到 body 最尾端，擺脫任何外層容器遮罩或 z-index 限制 */
+    if (widget.parentNode !== document.body) {
+      document.body.appendChild(widget);
+    }
+
+    snapToCorner("right", "top");
+    window.addEventListener("resize", function() {
+      snapToCorner(corner.x, corner.y);
+    });
+
+    /* 縮小按鈕點擊 */
+    var minBtn = document.getElementById("mascot-min-btn");
+    if (minBtn) {
+      minBtn.addEventListener("click", function(e) {
+        e.stopPropagation();
+        var isMin = widget.classList.toggle("is-minimized");
+        minBtn.textContent = isMin ? "+" : "-";
+        setTimeout(function() { snapToCorner(corner.x, corner.y); }, 20);
+      });
+    }
+
+    /* 底部互動按鈕區點擊（事件委派） */
+    var actionsBox = document.getElementById("mascot-actions");
+    if (actionsBox) {
+      actionsBox.addEventListener("click", function(e) {
+        var btn = e.target.closest(".mascot-action-btn");
+        if (!btn) return;
+        e.stopPropagation();
+        handleAction(btn.getAttribute("data-action"));
+      });
+    }
+
+    /* 標準滑鼠＋觸控拖曳偵測 */
+    var isDown = false;
+    var startX = 0, startY = 0;
+    var origLeft = 0, origTop = 0;
+
+    function getClientXY(e) {
+      if (e.touches && e.touches.length > 0) {
+        return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      }
+      if (e.changedTouches && e.changedTouches.length > 0) {
+        return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
+      }
+      return { x: e.clientX, y: e.clientY };
+    }
+
+    function onDragStart(e) {
+      if (e.target.closest("button")) return;
+      isDown = true;
+      wasDragged = false;
+      var pt = getClientXY(e);
+      startX = pt.x;
+      startY = pt.y;
+      var rect = widget.getBoundingClientRect();
+      origLeft = rect.left;
+      origTop = rect.top;
+    }
+
+    function onDragMove(e) {
+      if (!isDown) return;
+      var pt = getClientXY(e);
+      var dx = pt.x - startX;
+      var dy = pt.y - startY;
+
+      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
+        wasDragged = true;
+        widget.classList.add("is-dragging");
+      }
+
+      if (wasDragged) {
+        if (e.cancelable) e.preventDefault();
+        var rect = widget.getBoundingClientRect();
+        var newLeft = Math.min(Math.max(8, origLeft + dx), window.innerWidth - rect.width - 8);
+        var newTop = Math.min(Math.max(8, origTop + dy), window.innerHeight - rect.height - 8);
+        widget.style.left = newLeft + "px";
+        widget.style.top = newTop + "px";
+      }
+    }
+
+    function onDragEnd(e) {
+      if (!isDown) return;
+      isDown = false;
+      widget.classList.remove("is-dragging");
+
+      if (wasDragged) {
+        var rect = widget.getBoundingClientRect();
+        var centerX = rect.left + rect.width / 2;
+        var centerY = rect.top + rect.height / 2;
+        var targetX = centerX < window.innerWidth / 2 ? "left" : "right";
+        var targetY = centerY < window.innerHeight / 2 ? "top" : "bottom";
+        snapToCorner(targetX, targetY);
+        setTimeout(function() { wasDragged = false; }, 50);
+      } else if (!e.target.closest("button")) {
+        handleAction("next");
+      }
+    }
+
+    card.addEventListener("mousedown", onDragStart);
+    document.addEventListener("mousemove", onDragMove);
+    document.addEventListener("mouseup", onDragEnd);
+
+    card.addEventListener("touchstart", onDragStart, { passive: true });
+    document.addEventListener("touchmove", onDragMove, { passive: false });
+    document.addEventListener("touchend", onDragEnd);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupMascot);
+  } else {
+    setupMascot();
+  }
+})();
+</script>
