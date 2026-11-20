@@ -20,9 +20,10 @@ nav_order: 3
 
 ## 2. 上機實作步驟
 
-{: .highlight }
-> **執行目錄：** `~/202612VLSI/Lint/`  
-> **說明：** 請於 `Lint` 資料夾內開啟終端機，並於成功載入 `SpyGlass` 環境後，再執行檢查腳本。
+<div class="ws-path">
+  <strong>Lint 執行目錄：</strong><code>~/202612VLSI/Lint/</code><br>
+  <strong>說明：</strong>請於 <code>Lint</code> 資料夾內開啟終端機，並於成功載入 <code>SpyGlass</code> 環境後，執行 <code>source script/runlint</code> 進行靜態檢查。
+</div>
 
 ### 步驟一：於 Lint 資料夾開啟終端機並載入 EDA 環境
 
@@ -31,6 +32,7 @@ nav_order: 3
 ```bash
 csh
 menu
+```
 
 
 <div class="page-end-nav">
