@@ -10,6 +10,10 @@ nav_order: 3
 **預計實作時長：** 10 分鐘  
 **使用工具：** SpyGlass  
 
+<div class="ws-path">
+  <strong>環境警示：</strong>目前 <code>5924 (E413 實驗室工作站)</code> 尚未安裝 <code>SpyGlass</code> 工具，本單元僅講解 RTL Lint 觀念與標準操作流程，上機實作時請略過此步驟並直接進入下一階段（Synthesis）。
+</div>
+
 ---
 
 ## 1. 步驟目的與觀念說明
