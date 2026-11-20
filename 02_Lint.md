@@ -11,7 +11,7 @@ nav_order: 3
 **使用工具：** SpyGlass  
 
 <div class="ws-path">
-  <strong>環境警示：</strong>目前 <code>5924 (E413 實驗室工作站)</code> 尚未安裝 <code>SpyGlass</code> 工具。
+  <strong>環境警示：</strong>目前 <code>5924 (E413 實驗室工作站)</code> 尚未安裝 <code>SpyGlass</code> 工具，<code>adder.v</code>待安裝後跑 Lint。
 </div>
 
 ---
