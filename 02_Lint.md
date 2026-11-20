@@ -25,7 +25,7 @@ nav_order: 3
   <strong>說明：</strong>請於 <code>RTL</code> 資料夾內開啟終端機，並於成功載入 <code>SpyGlass</code> 環境後，輸入 <code>spyglass</code> 開啟 tool。
 </div>
 
-### 步驟一：於 Lint 資料夾開啟終端機並載入 EDA 環境
+### 步驟一：於 RTL 資料夾開啟終端機並載入 EDA 環境
 
 請先切換至 `~/202612VLSI/RTL` 資料夾開啟終端機（或在終端機中 `cd` 至該目錄），接著切換至 C Shell（`csh`）並透過 `menu` 指令選擇載入 **SpyGlass**：
 
