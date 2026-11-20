@@ -34,6 +34,23 @@ csh
 menu
 ```
 
+### 步驟二：啟動 SpyGlass 工具
+
+待終端機畫面顯示 SpyGlass 環境載入完成後，於同一終端機輸入以下指令開啟工具介面：
+
+```bash
+spyglass
+```
+
+### 步驟三：匯入設計檔案並執行 Lint 檢查
+
+1. 開啟 SpyGlass GUI 後，點擊左側 add file，加入位於 `RTL` 資料夾中的待測設計檔案（`adder.v`）後，點擊add並按OK離開。
+2. 點擊上方的 **goal setup** 並全選 lint 內容後按下 **Run goal(s)**。
+3. 檢視 **Message** 中的 **Error** 與 **Warning** 項目，確認語法或結構錯誤（不可有 `Error` ，若有 `Warning` 需評估是否會產生非預期 Latch 或合成落差），確認無誤後即可關閉視窗。
+4. 若有修改 RTL 程式碼，標準流程須重新執行一次 **VCS 功能模擬** 以確保修改後的電路行為仍正確無誤，確認通過後再進入下一階段（Synthesis）。
+
+> **上機提醒：** 本次上機實作因課程時間關係，確認 Lint 檢查無誤後不再次進行 VCS 模擬，可直接進入下一階段。
+
 
 <div class="page-end-nav">
   <span class="page-end-text">本章節已閱讀完畢，請確認以上實作皆已完成。</span>
